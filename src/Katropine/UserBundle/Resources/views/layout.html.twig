@@ -1,0 +1,22 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+        {% stylesheets
+            '@UserBundle/Resources/public/css/*'
+            '@KatropineAdminBundle/Resources/public/css/bootstrap.css'
+        %}
+        <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+        {% endstylesheets %}
+{% endblock %}
+    
+{% block body %}
+    <div id="master-loginform" class="master-loginform clearfix">
+            <h1>Log in:</h1>
+            
+            {{ block('fos_user_content') }}
+        </div>   
+{% endblock %}
+
+
+
+

@@ -1,0 +1,14 @@
+katropine_admin:
+    resource: "@KatropineAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /admin
+
+service_service:
+    resource: "@ServiceServiceBundle/Controller/"
+    type:     annotation
+    prefix:   /v1
+
+_user_bundle:
+    resource: "@UserBundle/Resources/config/routing.yml"
+    prefix:   /admin
+        

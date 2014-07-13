@@ -1,0 +1,70 @@
+{% extends 'KatropineAdminBundle::layout.html.twig' %}
+
+{% block title %}User List{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <nav class="navbar navbar-default" role="navigation">
+
+            <div class="container-fluid">
+                <form class="navbar-form navbar-left" role="search" method="GET">
+                    <div class="form-group">
+                        <input type="text" name="q" class="form-control" placeholder="Search">
+                    </div>
+
+                    <button type="submit" class="btn btn-default">Submit</button>
+
+                </form>
+                <div class="navbar-form navbar-right">
+                    
+                    <a href="${pageContext.request.contextPath}/secure/user?id=0&action=details" class="btn btn-primary">Add new</a>
+                   
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="row">
+                <div class="col-md-4"><div class="container-fluid"><h2 class="page-heading user"><fmt:message key="users"/></h2></div></div>
+                <div class="col-md-8">
+                    <div class="container-fluid">
+                        <div class="btn-toolbar" role="toolbar">
+                            <div class="btn-group pull-right">paginationHtmlRows</div><div class="btn-group pull-right">{% include 'KatropineAdminBundle:partials:pagination.html.twig' %}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+                
+            <div>Show: {{ userCount }} / {{ total }}</div>
+            <table class="table table-hover table-striped">
+                <tr>
+                    <th>Id</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Email</th>
+                    <th>Company</th>
+                    <th></th>
+                </tr>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.firstname }}</td>
+                    <td>{{ user.lastname }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.company.name }}</td>
+                    <td align="right"><a href="#" class="btn btn-success btn-xs">edit</a> <a href="#" class="btn btn-danger btn-xs">delete</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+            <div class="container-fluid">
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="btn-group pull-right">paginationHtmlRows</div><div class="btn-group pull-right">{% include 'KatropineAdminBundle:partials:pagination.html.twig' %}</div>
+                </div>
+            </div>
+        </div>
+    </div>              
+{% endblock %}    
+    
+    

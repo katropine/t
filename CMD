@@ -1,0 +1,8 @@
+Update DB tables:
+
+./app/console doctrine:schema:update --force
+
+
+All routes:
+
+./app/console router:debug
