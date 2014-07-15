@@ -207,6 +207,75 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
         }
 
         if (0 === strpos($pathinfo, '/admin')) {
+            if (0 === strpos($pathinfo, '/admin/company')) {
+                if (0 === strpos($pathinfo, '/admin/company/list')) {
+                    // company_list
+                    if (rtrim($pathinfo, '/') === '/admin/company/list') {
+                        if (substr($pathinfo, -1) !== '/') {
+                            return $this->redirect($pathinfo.'/', 'company_list');
+                        }
+
+                        return array (  'page' => 1,  '_controller' => 'Katropine\\AdminBundle\\Controller\\CompanyController::listAction',  '_route' => 'company_list',);
+                    }
+
+                    // katropine_admin_company_list
+                    if (0 === strpos($pathinfo, '/admin/company/list/page') && preg_match('#^/admin/company/list/page/(?P<page>[^/]++)/?$#s', $pathinfo, $matches)) {
+                        if (substr($pathinfo, -1) !== '/') {
+                            return $this->redirect($pathinfo.'/', 'katropine_admin_company_list');
+                        }
+
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'katropine_admin_company_list')), array (  'page' => 1,  '_controller' => 'Katropine\\AdminBundle\\Controller\\CompanyController::listAction',));
+                    }
+
+                }
+
+                // company_show
+                if (preg_match('#^/admin/company/(?P<id>[^/]++)/show/page/(?P<page>[^/]++)/?$#s', $pathinfo, $matches)) {
+                    if (substr($pathinfo, -1) !== '/') {
+                        return $this->redirect($pathinfo.'/', 'company_show');
+                    }
+
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'company_show')), array (  'id' => 0,  'page' => 1,  '_controller' => 'Katropine\\AdminBundle\\Controller\\CompanyController::showAction',));
+                }
+
+                // company_addnew
+                if (rtrim($pathinfo, '/') === '/admin/company/addnew') {
+                    if (substr($pathinfo, -1) !== '/') {
+                        return $this->redirect($pathinfo.'/', 'company_addnew');
+                    }
+
+                    return array (  'id' => 0,  '_controller' => 'Katropine\\AdminBundle\\Controller\\CompanyController::saveAction',  '_route' => 'company_addnew',);
+                }
+
+                // company_edit
+                if (preg_match('#^/admin/company(?P<id>[^/]++)/edit/?$#s', $pathinfo, $matches)) {
+                    if (substr($pathinfo, -1) !== '/') {
+                        return $this->redirect($pathinfo.'/', 'company_edit');
+                    }
+
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'company_edit')), array (  'id' => 0,  '_controller' => 'Katropine\\AdminBundle\\Controller\\CompanyController::saveAction',));
+                }
+
+                // company_save_response
+                if (rtrim($pathinfo, '/') === '/admin/company/saveresponse') {
+                    if (substr($pathinfo, -1) !== '/') {
+                        return $this->redirect($pathinfo.'/', 'company_save_response');
+                    }
+
+                    return array (  '_controller' => 'Katropine\\AdminBundle\\Controller\\CompanyController::saveresponseAction',  '_route' => 'company_save_response',);
+                }
+
+                // company_delete
+                if (preg_match('#^/admin/company/(?P<id>[^/]++)/delete/?$#s', $pathinfo, $matches)) {
+                    if (substr($pathinfo, -1) !== '/') {
+                        return $this->redirect($pathinfo.'/', 'company_delete');
+                    }
+
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'company_delete')), array (  'id' => 0,  '_controller' => 'Katropine\\AdminBundle\\Controller\\CompanyController::deleteAction',));
+                }
+
+            }
+
             // dashboard_index
             if (rtrim($pathinfo, '/') === '/admin/dashboard') {
                 if (substr($pathinfo, -1) !== '/') {
@@ -219,15 +288,32 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             if (0 === strpos($pathinfo, '/admin/user')) {
                 if (0 === strpos($pathinfo, '/admin/user/list')) {
                     // user_list
-                    if ($pathinfo === '/admin/user/list') {
-                        return array (  'page' => 1,  '_controller' => 'Katropine\\AdminBundle\\Controller\\UserController::listAction',  '_route' => 'user_list',);
+                    if (0 === strpos($pathinfo, '/admin/user/list/page') && preg_match('#^/admin/user/list/page/(?P<page>[^/]++)/?$#s', $pathinfo, $matches)) {
+                        if (substr($pathinfo, -1) !== '/') {
+                            return $this->redirect($pathinfo.'/', 'user_list');
+                        }
+
+                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'user_list')), array (  'page' => 1,  '_controller' => 'Katropine\\AdminBundle\\Controller\\UserController::listAction',));
                     }
 
                     // katropine_admin_user_list
-                    if (0 === strpos($pathinfo, '/admin/user/list/page') && preg_match('#^/admin/user/list/page(?:/(?P<page>[^/]++))?$#s', $pathinfo, $matches)) {
-                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'katropine_admin_user_list')), array (  'page' => 1,  '_controller' => 'Katropine\\AdminBundle\\Controller\\UserController::listAction',));
+                    if (rtrim($pathinfo, '/') === '/admin/user/list') {
+                        if (substr($pathinfo, -1) !== '/') {
+                            return $this->redirect($pathinfo.'/', 'katropine_admin_user_list');
+                        }
+
+                        return array (  'page' => 1,  '_controller' => 'Katropine\\AdminBundle\\Controller\\UserController::listAction',  '_route' => 'katropine_admin_user_list',);
                     }
 
+                }
+
+                // user_list_delete
+                if (preg_match('#^/admin/user/(?P<id>[^/]++)/delete/?$#s', $pathinfo, $matches)) {
+                    if (substr($pathinfo, -1) !== '/') {
+                        return $this->redirect($pathinfo.'/', 'user_list_delete');
+                    }
+
+                    return $this->mergeDefaults(array_replace($matches, array('_route' => 'user_list_delete')), array (  'id' => 0,  '_controller' => 'Katropine\\AdminBundle\\Controller\\UserController::deleteAction',));
                 }
 
                 // katropine_admin_user_seed

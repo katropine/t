@@ -181,6 +181,29 @@ the Team.
     'form.new_password' => 'New password:',
     'form.new_password_confirmation' => 'Verification:',
   ),
+  'messages' => 
+  array (
+    'Dashboard' => 'Dashboard',
+    'User_List' => 'User List',
+    'Company_List' => 'Company List',
+    'Submit' => 'Submit',
+    'Add_new' => 'Add new',
+    'Id' => 'Id',
+    'Name' => 'Name',
+    'First_name' => 'First name',
+    'Last_name' => 'Last name',
+    'Email' => 'Email',
+    'Company' => 'Company',
+    'edit' => 'edit',
+    'delete' => 'delete',
+    'records' => 'records',
+    'Go_to_Page' => 'Go to Page',
+    'users' => 'users',
+    'Users' => 'Users',
+    'Save' => 'Save',
+    'Back' => 'Back',
+    'Company_name' => 'Company name',
+  ),
 ));
 
 
