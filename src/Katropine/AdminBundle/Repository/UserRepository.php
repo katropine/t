@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityRepository;
 class UserRepository extends EntityRepository {
 
     public function fetchBatch($q = "", $limit = 10, $offset = 0) {
-        $dql = "SELECT u FROM KatropineAdminBundle:User u WHERE u.firstname LIKE :firstname OR u.lastname LIKE :lastname OR u.email LIKE :email";
+        $dql = "SELECT u FROM KatropineAdminBundle:User u WHERE u.firstname LIKE :firstname OR u.lastname LIKE :lastname OR u.email LIKE :email ORDER BY u.id DESC";
         
         return $this->getEntityManager()->createQuery($dql)
                         ->setParameter("firstname", "%{$q}%")
@@ -25,7 +25,7 @@ class UserRepository extends EntityRepository {
     }
 
     public function countAll($q = "") {
-        $dql = "SELECT count(u) FROM KatropineAdminBundle:User u WHERE u.firstname LIKE :firstname OR u.lastname LIKE :lastname OR u.email LIKE :email";
+        $dql = "SELECT count(u) FROM KatropineAdminBundle:User u WHERE u.firstname LIKE :firstname OR u.lastname LIKE :lastname OR u.email LIKE :email ORDER BY u.id DESC";
         return $this->getEntityManager()->createQuery($dql)
                 ->setParameter("firstname", "%{$q}%")
                 ->setParameter("lastname", "%{$q}%")
@@ -35,7 +35,7 @@ class UserRepository extends EntityRepository {
     
     public function fetchByCompanyId($id, $limit = 10, $offset = 0){
         
-        $dql = "SELECT u FROM KatropineAdminBundle:User u WHERE IDENTITY(u.company) = :id";
+        $dql = "SELECT u FROM KatropineAdminBundle:User u WHERE IDENTITY(u.company) = :id ORDER BY u.id DESC";
         
         $query = $this->getEntityManager()->createQuery($dql)
                         ->setParameter("id", $id) 

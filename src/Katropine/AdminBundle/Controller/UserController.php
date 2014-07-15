@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Katropine\AdminBundle\Classes\Pagination;
 use Symfony\Component\HttpFoundation\Request;
-
+use Katropine\AdminBundle\Entity\User;
 /**
 * @Route("/user")
 * http://localhost/timelly/web/app_dev.php/admin/user/
@@ -54,6 +54,57 @@ class UserController extends Controller{
             'q'             => $q
         );
     }
+    
+    /**
+     * @Route("/addnew/", name="user_addnew")
+     * @Route("{id}/edit/", name="user_edit")
+     * @Template()
+     */
+    public function saveAction(Request $request, $id = 0){
+        if($id == 0){
+            $user = new User();
+        }else{
+            $user = $this->getDoctrine()->getEntityManager()->find("KatropineAdminBundle:User", $id);
+        }
+        
+        $form = $this->createFormBuilder($user)
+            ->add('firstname', 'text', array('label' => 'First_name'))
+            ->add('lastname', 'text', array('label' => 'Last_name'))
+            ->add('email', 'text', array('label' => 'Email')) 
+            ->add('company', 'entity', array( 'class' => 'KatropineAdminBundle:Company', 'property' => 'name'))    
+            ->add('password', 'password', array('label' => 'Password'))    
+            ->add('save', 'submit', array( 'attr' => [ 'class' => 'btn btn-primary'] ))
+            ->add('back', 'button', array( 'attr' => [ 'onclick' => 'window.history.back();'] ))
+            ->getForm();
+        
+        $form->handleRequest($request);
+        $message = '';
+        if ($request->isMethod('POST')) {
+            if($form->isValid()){
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($user);
+                $em->flush();
+                return $this->redirect($this->generateUrl('user_save_response'));
+            }else{
+                $message = "Upss, could not save";
+            }
+        }
+        
+        return array(
+            'form' => $form->createView(),
+            'message' => $message
+        );
+    }
+    
+    /**
+     * @Route("/saveresponse/", name="user_save_response")
+     * @Template()
+     */
+    public function saveresponseAction(){
+        
+        return array();
+    }
+    
     /**
      * @Route("/{id}/delete/", name="user_list_delete")
      * @Template()

@@ -21,7 +21,7 @@
                 </form>
                 <div class="navbar-form navbar-right">
                     
-                    <a href="${pageContext.request.contextPath}/secure/user?id=0&action=details" class="btn btn-primary">{% trans %}Add_new{% endtrans %}</a>
+                    <a href="{{path('user_addnew')}}" class="btn btn-primary">{% trans %}Add_new{% endtrans %}</a>
                    
                 </div>
             </div>
@@ -55,7 +55,7 @@
                     <td>{{ user.lastname }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.company.name }}</td>
-                    <td align="right"><a href="#" class="btn btn-success btn-xs">edit</a> <a href="{{path('user_list_delete', {'id': user.id})}}" class="btn btn-danger btn-xs">delete</a></td>
+                    <td align="right"><a href="{{path('user_edit', {'id': user.id})}}" class="btn btn-success btn-xs">edit</a> <a href="{{path('user_list_delete', {'id': user.id})}}" class="btn btn-danger btn-xs">delete</a></td>
                 </tr>
                 {% endfor %}
             </table>
