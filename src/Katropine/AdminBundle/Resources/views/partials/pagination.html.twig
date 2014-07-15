@@ -1,19 +1,19 @@
 <ul class="pagination">
     {% if pagination.total > pagination.maxrows %}
-       <li><a href="{{path('user_list') }}/page/{{pagination.first}}" title="Go to Page {{pagination.first}}">&laquo;</a></li>
-       <li><a href="{{path('user_list') }}/page/{{pagination.prev}}" title="Go to Page {{pagination.prev}}">&lsaquo;</a></li>
+       <li><a href="{{pagination.getUrlFirst}}" title="{% trans %}Go_to_Page{% endtrans %} {{pagination.first}}">&laquo;</a></li>
+       <li><a href="{{pagination.getUrlPrev}}" title="{% trans %}Go_to_Page{% endtrans %} {{pagination.prev}}">&lsaquo;</a></li>
         {% for i in range(pagination.start, pagination.end) %}
         {% if i==pagination.page %}
         {% set current = "active" %}
         {% else %}
         {% set current = "" %}
         {% endif %}
-        <li class="{{current}}"><a href="{{path('user_list')}}/page/{{i}}" title="Go to Page {{i}}" class="page {{current}}">{{i}}</a></li>
+        <li class="{{current}}"><a href="{{pagination.getUrlIterated(i)}}" title="{% trans %}Go_to_Page{% endtrans %} {{i}}" class="page {{current}}">{{i}}</a></li>
 
     {% endfor %}
-       <li><a href="{{path('user_list')}}/page/{{pagination.next}}" title="Go to Page {{pagination.next}}">&rsaquo;</a></li>
-       <li><a href="{{path('user_list')}}/page/{{pagination.last}}" title="Go to Page {{pagination.last}}">&raquo;</a></li>
+       <li><a href="{{pagination.getUrlNext}}" title="{% trans %}Go_to_Page{% endtrans %} {{pagination.next}}">&rsaquo;</a></li>
+       <li><a href="{{pagination.getUrlLast}}" title="{% trans %}Go_to_Page{% endtrans %} {{pagination.last}}">&raquo;</a></li>
     {% endif %}   
     <li class="disabled"><a href="#">{{pagination.page}}/{{pagination.end}}</a></li>
-    <li class="disabled"><a href="#">records: {{pagination.total}}</a></li>
+    <li class="disabled"><a href="#">{% trans %}records{% endtrans %}: {{pagination.total}}</a></li>
 </ul>

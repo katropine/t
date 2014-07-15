@@ -4,7 +4,7 @@ imports:
 
 framework:
     #esi:             ~
-    translator:      { fallback: "%locale%" }
+    translator:      { fallback: 'en' }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -15,7 +15,7 @@ framework:
     templating:
         engines: ['twig']
         #assets_version: SomeVersionScheme
-    default_locale:  "%locale%"
+    default_locale:  'en'
     trusted_hosts:   ~
     trusted_proxies: ~
     session:
@@ -28,6 +28,9 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form:
+        resources:
+            - 'KatropineAdminBundle:Form:bootstrap-override.html.twig'
 
 # Assetic Configuration
 assetic:
@@ -73,3 +76,8 @@ fos_user:
     db_driver: orm 
     firewall_name: main
     user_class: Katropine\UserBundle\Entity\User
+    
+    
+parameters:
+    max_rows: 50
+    max_pagination_links: 5

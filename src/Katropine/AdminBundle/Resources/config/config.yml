@@ -1,0 +1,4 @@
+twig:
+    form:
+        resources:
+            - 'KatropineAdminBundle:Form:bootstrap-override.html.twig'

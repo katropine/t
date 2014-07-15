@@ -10,10 +10,9 @@ namespace Katropine\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Katropine\AdminBundle\Repository\CompanyRepository")
  * @ORM\Table(name="timelly_company")
  */
 class Company
@@ -36,6 +35,7 @@ class Company
      * 
      */
     protected $users;
+  
     
     public function getId() {
         return $this->id;

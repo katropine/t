@@ -70,7 +70,7 @@ class Pagination {
 
         if ($npage<1) $npage = 1;
         
-        $paging = new \stdClass();
+        $paging = new PaginationResult();
         $paging->first = 1;
         if ($page>1) $paging->prev = $page - 1; else $paging->prev = 1;
         $paging->start = $npage;

@@ -6,3 +6,8 @@ Update DB tables:
 All routes:
 
 ./app/console router:debug
+
+
+Create user in FOS:
+
+./app/console fos:user:create kriss kriss@test.com test

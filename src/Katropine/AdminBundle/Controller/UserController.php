@@ -12,6 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Katropine\AdminBundle\Classes\Pagination;
+use Symfony\Component\HttpFoundation\Request;
+
 /**
 * @Route("/user")
 * http://localhost/timelly/web/app_dev.php/admin/user/
@@ -19,11 +21,13 @@ use Katropine\AdminBundle\Classes\Pagination;
 class UserController extends Controller{
     
     /**
-     * @Route("/list", name="user_list")
-     * @Route("/list/page/{page}/search/{q}")
+     * @Route("/list/page/{page}/", name="user_list")
+     * @Route("/list/")
      * @Template()
      */
-    public function listAction($page = 1, $q = "") {
+    public function listAction($page = 1) {
+        
+        $q = Request::createFromGlobals()->query->get('q');
         
         $total = $this->getDoctrine()->getRepository('KatropineAdminBundle:User')->countAll($q);
         
@@ -32,7 +36,13 @@ class UserController extends Controller{
         $pagination = new Pagination($maxRows, 5);
         $pg = $pagination->calc($page, $total);
         
-        //var_dump($pagination);
+        // set custom links to pagination
+        $pg->setUrlFirst($this->generateUrl('user_list', array('page' => $pg->first, 'q' => $q)))
+                ->setUrlPrev($this->generateUrl('user_list', array('page' => $pg->prev, 'q' => $q)))
+                ->setUrlIterated($this->generateUrl('user_list', array('page' => '%s', 'q' => $q)))
+                ->setUrlNext($this->generateUrl('user_list', array('page' => $pg->next, 'q' => $q)))
+                ->setUrllast($this->generateUrl('user_list', array('page' => $pg->last, 'q' => $q)));
+        
         $users = $this->getDoctrine()->getRepository('KatropineAdminBundle:User')->fetchBatch($q, $pagination->getLimit(), $pagination->getOffset());
         $userCount = count($users);
         
@@ -44,6 +54,15 @@ class UserController extends Controller{
             'q'             => $q
         );
     }
+    /**
+     * @Route("/{id}/delete/", name="user_list_delete")
+     * @Template()
+     */
+    public function deleteAction($id = 0){
+        return array();
+    }
+    
+    
     
     /**
      * @Route("/seed")

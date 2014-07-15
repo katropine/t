@@ -1,0 +1,78 @@
+{% extends 'KatropineAdminBundle::layout.html.twig' %}
+
+{% block title %}{{'Company'|trans}} {{company.name}} {% endblock %}
+
+{% block bodyheading %}
+    {% include 'KatropineAdminBundle:partials:bodyheading.html.twig' with {'title' : 'Company'|trans } %}
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <i class="fa fa-check fa-5x"></i>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <p class="announcement-heading">{{company.name}}</p>
+                            <p class="announcement-text">{{total}} {{'users'|trans}}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="panel-footer announcement-bottom">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            Complete Tasks
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>    
+                            
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="row">
+                <div class="col-md-4"><div class="container-fluid"><h2 class="page-heading user">{{'Users'|trans}}</h2></div></div>
+                <div class="col-md-8">
+                    <div class="container-fluid">
+                        <div class="btn-toolbar" role="toolbar">
+                            <div class="btn-group pull-right">paginationHtmlRows</div><div class="btn-group pull-right">{% include 'KatropineAdminBundle:partials:pagination.html.twig' %}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <table class="table table-hover table-striped">
+                <tr>
+                    <th>{{'Id'|trans}}</th>
+                    <th>{{'First_name'|trans}}</th>
+                    <th>{{'Last_name'|trans}}</th>
+                    <th>{{'Email'|trans}}</th>
+                    <th></th>
+                </tr>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.firstname }}</td>
+                        <td>{{ user.lastname }}</td>
+                        <td>{{ user.email }}</td>
+                        <td align="right"><a href="#" class="btn btn-success btn-xs">{{'edit'|trans}}</a> <a href="#" class="btn btn-danger btn-xs">{{'delete'|trans}}</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div class="container-fluid">
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="btn-group pull-right">paginationHtmlRows</div><div class="btn-group pull-right">{% include 'KatropineAdminBundle:partials:pagination.html.twig' %}</div>
+                </div>
+            </div>
+        </div>
+    </div>        
+{% endblock %}      
