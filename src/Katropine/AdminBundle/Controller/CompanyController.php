@@ -93,7 +93,7 @@ class CompanyController extends Controller{
     }
     /**
      * @Route("/addnew/", name="company_addnew")
-     * @Route("{id}/edit/", name="company_edit")
+     * @Route("/{id}/edit/", name="company_edit")
      * @Template()
      */
     public function saveAction(Request $request, $id = 0){
@@ -107,25 +107,30 @@ class CompanyController extends Controller{
         $form = $this->createFormBuilder($company)
             ->add('name', 'text', array('label' => 'Company_name'))
             ->add('save', 'submit', array( 'attr' => [ 'class' => 'btn btn-primary'] ))
-            ->add('back', 'button', array( 'attr' => [ 'onclick' => 'window.history.back();'] ))
+            ->add('cancel', 'button', array( 'attr' => [ 'onclick' => "window.location = '".$this->generateUrl('company_list')."'" ] ))
             ->getForm();
         
         $form->handleRequest($request);
-        $message = '';
+
         if ($request->isMethod('POST')) {
             if($form->isValid()){
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($company);
                 $em->flush();
-                return $this->redirect($this->generateUrl('company_save_response'));
+                if($id > 0){
+                    $this->get('session')->getFlashBag()->set('success', 'message.Record_updated_successfully');
+                }else{
+                    $this->get('session')->getFlashBag()->set('success', 'message.New_record_added_successfully');
+                }
+                return $this->redirect($this->generateUrl('company_edit', ['id' => $company->getId()]));
             }else{
-                $message = "Upss, could not save";
+                $this->get('session')->getFlashBag()->set('warning', 'message.Unable_to_save_record_form_is_not_valid');
             }
         }
         
         return array(
             'form' => $form->createView(),
-            'message' => $message
+            'company' => $company
         );
     }
     
@@ -144,14 +149,16 @@ class CompanyController extends Controller{
      */
     public function deleteAction($id = 0){
         if($id == 0){
-            // deal with this
+            throw $this->createNotFoundException(
+                    'No data found for id ' . $id
+            );
         }
         $company = $this->getDoctrine()->getEntityManager()->find("KatropineAdminBundle:Company", $id);
         $em = $this->getDoctrine()->getEntityManager();
         $em->remove($company);
         $em->flush();
         // show warning that all the users will be deleted!!!
-        
+        $this->get('session')->getFlashBag()->set('success', 'message.Record_deleted_successfully');
         return $this->redirect($this->generateUrl('company_list'));
     }
     

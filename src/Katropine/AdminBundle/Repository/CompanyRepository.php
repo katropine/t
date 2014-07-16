@@ -12,7 +12,7 @@ class CompanyRepository extends EntityRepository {
     
     
     public function fetchById($id){
-        $dql = "SELECT c FROM KatropineAdminBundle:Company c WHERE c.id = :id";
+        $dql = "SELECT c FROM KatropineAdminBundle:Company c WHERE c.id = :id ORDER BY c.id DESC";
         return $this->getEntityManager()->createQuery($dql)
                 ->setFetchMode('User', 'users', \Doctrine\ORM\Mapping\ClassMetadata::FETCH_EXTRA_LAZY)
                 ->setParameter("id", $id)
@@ -20,7 +20,7 @@ class CompanyRepository extends EntityRepository {
     }
     
     public function fetchBatch($q = "",  $limit = 10, $offset = 0) {
-        $dql = "SELECT c FROM KatropineAdminBundle:Company c WHERE c.name LIKE :name";
+        $dql = "SELECT c FROM KatropineAdminBundle:Company c WHERE c.name LIKE :name ORDER BY c.id DESC";
         
         return $this->getEntityManager()->createQuery($dql)
                         ->setParameter("name", "%{$q}%")

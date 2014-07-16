@@ -10,13 +10,15 @@ namespace Katropine\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\OneToMany;
+
 /**
  * @ORM\Entity(repositoryClass="Katropine\AdminBundle\Repository\UserRepository")
  * @ORM\Table(name="timelly_user")
+ * @ORM\HasLifecycleCallbacks
  */
-class User
-{
+class User{
+    
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -25,11 +27,11 @@ class User
     protected $id;
     
     /**
-     * @ORM\Column(type="string", length=32)
+     * @ORM\Column(type="string", length=32, nullable=true)
      */
     protected $firstname;
     /**
-     * @ORM\Column(type="string", length=32)
+     * @ORM\Column(type="string", length=32, nullable=true)
      */
     protected $lastname;
     
@@ -43,10 +45,15 @@ class User
      */
     protected $password;
     
+    
+    const TYPE_OWNER = 'OWNER';
+    const TYPE_MANAGER = 'MANAGER';
+    const TYPE_USER = 'USER';
+    
     /**
      * @ORM\Column(type="string", length=32)
      */
-    protected $type = "OWNER";
+    protected $type = 'OWNER';
     
     /**
      *
@@ -55,10 +62,41 @@ class User
      */
     protected $company;
     
-    public function __construct(){
-        // your own logic
-    }
+    /**
+     *
+     * @OneToMany(targetEntity="WorkTime", mappedBy="user", cascade={"all"}, orphanRemoval=true)
+     */
+    protected $workTimes;
     
+    /** 
+     * @ORM\Column(type="datetime") 
+     */
+    protected $created;
+    
+    /**
+     * @ORM\Column(type="datetime") 
+     */
+    protected $modified;
+    
+    /** 
+     * @ORM\Column(type="string") 
+     */
+    private $timezone = 'UTC';
+    
+     /**
+     * Tell doctrine that before we persist or update we call the updatedTimestamps() function.
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updatedTimestamps(){
+        $this->setModified(new \DateTime(date('Y-m-d H:i:s')));
+
+        if($this->getCreated() == null){
+            $this->setCreated(new \DateTime(date('Y-m-d H:i:s')));
+        }
+    }
+
     public function getId() {
         return $this->id;
     }
@@ -104,13 +142,38 @@ class User
     }
 
     public function setType($type) {
+        if (!in_array($type, array(self::TYPE_OWNER, self::TYPE_MANAGER, status::TYPE_USER))) {
+            throw new \InvalidArgumentException("Invalid status");
+        }
         $this->type = $type;
     }
 
     public function setCompany($company) {
         $this->company = $company;
     }
+    
+    public function getCreated() {
+        return $this->created;
+    }
 
+    public function setCreated(\DateTime $date) {
+        $this->created = $date;
+    }
+    
+    public function getModified() {
+        return $this->modified;
+    }
+
+    public function setModified(\DateTime $date) {
+        $this->modified = clone $date;
+    }
+    public function getTimezone() {
+        return $this->timezone;
+    }
+
+    public function setTimezone($timezone) {
+        $this->timezone = $timezone;
+    }
 
 
 

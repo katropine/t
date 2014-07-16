@@ -78,21 +78,25 @@ class UserController extends Controller{
             ->getForm();
         
         $form->handleRequest($request);
-        $message = '';
         if ($request->isMethod('POST')) {
             if($form->isValid()){
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($user);
                 $em->flush();
-                return $this->redirect($this->generateUrl('user_save_response'));
+                if($id > 0){
+                    $this->get('session')->getFlashBag()->set('success', 'message.Record_updated_successfully');
+                }else{
+                    $this->get('session')->getFlashBag()->set('success', 'message.New_record_added_successfully');
+                }
+                return $this->redirect($this->generateUrl('user_edit', ['id' => $user->getId()]));
             }else{
-                $message = "Upss, could not save";
+                $this->get('session')->getFlashBag()->set('warning', 'message.Unable_to_save_record_form_is_not_valid');
             }
         }
         
         return array(
             'form' => $form->createView(),
-            'message' => $message
+            'user' => $user
         );
     }
     

@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping\OneToMany;
 /**
  * @ORM\Entity(repositoryClass="Katropine\AdminBundle\Repository\CompanyRepository")
  * @ORM\Table(name="timelly_company")
+ * @ORM\HasLifecycleCallbacks
  */
 class Company
 {
@@ -35,7 +36,30 @@ class Company
      * 
      */
     protected $users;
-  
+    
+    /** 
+     * @ORM\Column(type="datetime") 
+     */
+    protected $created;
+    
+    /**
+     * @ORM\Column(type="datetime") 
+     */
+    protected $modified;
+    
+    /**
+     * Tell doctrine that before we persist or update we call the updatedTimestamps() function.
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updatedTimestamps(){
+        $this->setModified(new \DateTime(date('Y-m-d H:i:s')));
+
+        if($this->getCreated() == null){
+            $this->setCreated(new \DateTime(date('Y-m-d H:i:s')));
+        }
+    }
     
     public function getId() {
         return $this->id;
@@ -60,6 +84,22 @@ class Company
     public function setUsers($users) {
         $this->users = $users;
     }
+    public function getCreated() {
+        return $this->created;
+    }
+
+    public function getModified() {
+        return $this->modified;
+    }
+
+    public function setCreated($created) {
+        $this->created = $created;
+    }
+
+    public function setModified($modified) {
+        $this->modified = $modified;
+    }
+
 
 
 }

@@ -9,7 +9,7 @@
 {% block body %}
     <div class="row">
         <div class="col-lg-12">
-            <div class="panel panel-warning">
+            <div class="panel panel-info">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-6">
@@ -61,10 +61,10 @@
                 {% for user in users %}
                     <tr>
                         <td>{{ user.id }}</td>
-                        <td>{{ user.firstname }}</td>
-                        <td>{{ user.lastname }}</td>
-                        <td>{{ user.email }}</td>
-                        <td align="right"><a href="#" class="btn btn-success btn-xs">{{'edit'|trans}}</a> <a href="#" class="btn btn-danger btn-xs">{{'delete'|trans}}</a></td>
+                        <td><a href="{{path('user_edit', {'id': user.id})}}">{{ user.firstname }}</a></td>
+                        <td><a href="{{path('user_edit', {'id': user.id})}}">{{ user.lastname }}</a></td>
+                        <td><a href="{{path('user_edit', {'id': user.id})}}">{{ user.email }}</a></td>
+                        <td align="right"><a href="{{path('user_edit', {'id': user.id})}}" class="btn btn-success btn-xs">{{'edit'|trans}}</a> <a href="#" class="btn btn-danger btn-xs">{{'delete'|trans}}</a></td>
                     </tr>
                 {% endfor %}
             </table>
