@@ -1,0 +1,18 @@
+
+{% 
+    set links = {
+        0:{'url' : path('company_subscriptions', {'id': company.id}),  'title' : 'Orders', 'route' : 'company_subscriptions'},
+        1:{'url' : path('company_subscribe', {'id': company.id}),  'title' : 'Order_new_subscription', 'route' : 'company_subscribe'},
+        2:{'url' : path('company_user_show', {'id': company.id}),  'title' : 'Users', 'route' : 'company_user_show'}
+        
+    } 
+
+%}
+
+{% for link in links %}
+    {% if link.route == route_name %}
+        <a href="{{link.url}}" class="btn btn-primary btn-xs active">{{link.title|trans}}</a>
+    {% else %}
+        <a href="{{link.url}}" class="btn btn-default btn-xs">{{link.title|trans}}</a>
+    {% endif %}
+{% endfor %}

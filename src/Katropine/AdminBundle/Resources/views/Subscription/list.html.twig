@@ -1,0 +1,69 @@
+{% extends 'KatropineAdminBundle::layout.html.twig' %}
+
+{% block title %}{{'Subscription_List'|trans}}{% endblock %}
+
+{% block bodyheading %}
+    {% include 'KatropineAdminBundle:partials:bodyheading.html.twig' with {'title' : 'Subscription_List'|trans } %}
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <nav class="navbar navbar-default" role="navigation">
+
+            <div class="container-fluid">
+                <form class="navbar-form navbar-left" role="search" method="GET">
+                    <div class="form-group">
+                        <input type="text" name="q" class="form-control" placeholder="{% trans %}Submit{% endtrans %}" value="{{q}}">
+                    </div>
+
+                    <button type="submit" class="btn btn-default">{% trans %}Submit{% endtrans %}</button>
+
+                </form>
+                <div class="navbar-form navbar-right">
+                    
+                    <a href="{{path('subscription_addnew')}}" class="btn btn-primary">{% trans %}Add_new{% endtrans %}</a>
+                   
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="row">
+                <div class="col-md-4"><div class="container-fluid"><h2 class="page-heading user"><fmt:message key="users"/></h2></div></div>
+                <div class="col-md-8">
+                    <div class="container-fluid">
+                        <div class="btn-toolbar" role="toolbar">
+                            <div class="btn-group pull-right">paginationHtmlRows</div><div class="btn-group pull-right">{% include 'KatropineAdminBundle:partials:pagination.html.twig' %}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-hover table-striped">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Max users</th>
+                    <th></th>
+                </tr>
+                {% for subscription in subscriptions %}
+                <tr>
+                    <td>{{ subscription.id }}</td>
+                    <td><a href="{{ path('subscription_show', {'id' : subscription.id}) }}">{{ subscription.name }}</a></td>
+                    <td>$ {{ subscription.price }} / {{ subscription.period }}{{ subscription.periodType|trans }}</td>
+                    <td>{{ subscription.maxUsers }}</td>
+                    <td align="right"><a href="{{path('subscription_edit', {'id': subscription.id })}}" class="btn btn-success btn-xs">{{'edit'|trans}}</a> <a href="{{path('subscription_delete', {'id': subscription.id })}}" class="btn btn-danger btn-xs">{{'delete'|trans}}</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+            <div class="container-fluid">
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="btn-group pull-right">paginationHtmlRows</div><div class="btn-group pull-right">{% include 'KatropineAdminBundle:partials:pagination.html.twig' %}</div>
+                </div>
+            </div>
+        </div>
+    </div>              
+{% endblock %}    
+    
+    

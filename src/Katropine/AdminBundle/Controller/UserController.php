@@ -116,8 +116,7 @@ class UserController extends Controller{
     public function deleteAction($id = 0){
         return array();
     }
-    
-    
+
     
     /**
      * @Route("/seed")
@@ -149,5 +148,5 @@ class UserController extends Controller{
         
         die("done");
     }
-
+    
 }
