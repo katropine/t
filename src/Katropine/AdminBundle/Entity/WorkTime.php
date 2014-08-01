@@ -102,7 +102,11 @@ class WorkTime {
         $this->modified = $modified;
     }
 
+    public function getModified() {
+        return $this->modified;
+    }
 
+    
 
 
 }
