@@ -1,0 +1,23 @@
+{% extends 'KatropineAdminBundle::layout.html.twig' %}
+
+{% block title %}{{'Add_new'|trans}} {{'subscription'|trans}}{% endblock %}
+
+{% block bodyheading %}
+    {% include 'KatropineAdminBundle:partials:bodyheading.html.twig' with {'title' : 'Add_new'|trans } %}
+{% endblock %}
+
+{% block body %}
+    <div>
+        <table class="table">
+            <tr>
+                <td>{{'Id'|trans}}: {{subscription.id}}</td>
+                <td>{{'Name'|trans}}: {{subscription.name}}</td>
+                <td>{{'Created'|trans}}: {{subscription.created|date('Y-m-d H:i:s')}}</td>
+                <td>{{'Updated'|trans}}: {{subscription.modified|date('Y-m-d H:i:s')}}</td>
+            </tr>
+        </table>
+    </div>
+    <div>      
+        {{ form(form) }}
+    </div>
+{% endblock %}    

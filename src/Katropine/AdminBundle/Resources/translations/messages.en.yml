@@ -27,3 +27,18 @@ message:
     Record_updated_successfully: Record updated successfully.
     Unable_to_save_record_form_is_not_valid: Unable to save record, form is not valid!
     Record_deleted_successfully: Record deleted successfully.
+MONTHS: month(s)
+YEARS: year(s)
+Orders: Orders
+Order_new_subscription: Order new subscription
+Max_users: Max users
+Period: Period
+Period_type: Period type
+Start_date: Start date
+End_date: End date
+Active: Active 	
+Paid: Paid
+Price: Price
+ACTIVE: Active
+EXPIRED: Expired
+CANCELED: Canceled

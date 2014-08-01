@@ -11,13 +11,14 @@ namespace Katropine\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
+use Katropine\AdminBundle\Classes\EntityCore;
 
 /**
  * @ORM\Entity(repositoryClass="Katropine\AdminBundle\Repository\UserRepository")
  * @ORM\Table(name="timelly_user")
  * @ORM\HasLifecycleCallbacks
  */
-class User{
+class User extends EntityCore{
     
     /**
      * @ORM\Id
@@ -68,34 +69,13 @@ class User{
      */
     protected $workTimes;
     
-    /** 
-     * @ORM\Column(type="datetime") 
-     */
-    protected $created;
-    
-    /**
-     * @ORM\Column(type="datetime") 
-     */
-    protected $modified;
-    
+       
     /** 
      * @ORM\Column(type="string") 
      */
     private $timezone = 'UTC';
     
-     /**
-     * Tell doctrine that before we persist or update we call the updatedTimestamps() function.
-     *
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     */
-    public function updatedTimestamps(){
-        $this->setModified(new \DateTime(date('Y-m-d H:i:s')));
-
-        if($this->getCreated() == null){
-            $this->setCreated(new \DateTime(date('Y-m-d H:i:s')));
-        }
-    }
+    
 
     public function getId() {
         return $this->id;
@@ -142,7 +122,7 @@ class User{
     }
 
     public function setType($type) {
-        if (!in_array($type, array(self::TYPE_OWNER, self::TYPE_MANAGER, status::TYPE_USER))) {
+        if (!in_array($type, array(self::TYPE_OWNER, self::TYPE_MANAGER, self::TYPE_USER))) {
             throw new \InvalidArgumentException("Invalid status");
         }
         $this->type = $type;
@@ -152,21 +132,6 @@ class User{
         $this->company = $company;
     }
     
-    public function getCreated() {
-        return $this->created;
-    }
-
-    public function setCreated(\DateTime $date) {
-        $this->created = $date;
-    }
-    
-    public function getModified() {
-        return $this->modified;
-    }
-
-    public function setModified(\DateTime $date) {
-        $this->modified = clone $date;
-    }
     public function getTimezone() {
         return $this->timezone;
     }
@@ -174,7 +139,10 @@ class User{
     public function setTimezone($timezone) {
         $this->timezone = $timezone;
     }
-
+    
+    public function getAllTypes(){
+        return array(self::TYPE_OWNER=>self::TYPE_OWNER, self::TYPE_MANAGER=>self::TYPE_MANAGER, self::TYPE_USER=>self::TYPE_USER);
+    }
 
 
 }

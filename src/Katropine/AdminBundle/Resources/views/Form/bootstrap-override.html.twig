@@ -152,8 +152,10 @@
     {% else %}
         {% set vars = widget == 'text' ? { 'attr': { 'size': 1 }} : {} %}
         <div {{ block('widget_container_attributes') }}>
-            {{ form_widget(form.hour, vars) }}{% if with_minutes %}:{{ form_widget(form.minute, vars) }}{% endif %}{% if with_seconds %}:{{ form_widget(form.second, vars) }}{% endif %}
+            <div class="clearfix"></div>
+            {{ form_widget(form.hour, vars) }}{% if with_minutes %}{{ form_widget(form.minute, vars) }}{% endif %}{% if with_seconds %}{{ form_widget(form.second, vars) }}{% endif %}
         </div>
+        <div class="clearfix"></div>
     {% endif %}
 
 {% endblock time_widget %}
