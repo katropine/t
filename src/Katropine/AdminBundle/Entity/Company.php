@@ -42,9 +42,8 @@ class Company extends EntityCore{
      * @OneToMany(targetEntity="SubscriptionOrder", mappedBy="company", cascade={"all"}, orphanRemoval=true)
      */
     protected $subscriptionOrders;
-
-
-
+    
+    
     public function getId() {
         return $this->id;
     }

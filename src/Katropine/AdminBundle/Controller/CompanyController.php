@@ -351,12 +351,31 @@ class CompanyController extends Controller{
             'route_name' => 'company_subscriptions'
         );
     }
+    
+    /**
+     * @Route("/company/{id}/employmentcontract/", name="company_employment_contracts")
+     * @Template()
+     */
+    public function employmentcontractAction($id){
+        $company = $this->getDoctrine()->getRepository('KatropineAdminBundle:Company')->fetchById($id);
+        
+        return [
+            'company' => $company,
+            'form' => $form    
+        ];
+    }
+    
     /**
      * @Route("/company/{id}/settings/", name="company_settings")
      * @Template()
      */
-    public function settingsAction(){
+    public function settingsAction($id){
+        $company = $this->getDoctrine()->getRepository('KatropineAdminBundle:Company')->fetchById($id);
         
+        return [
+            'company' => $company,
+            'form' => $form
+        ];
     }
     
 }

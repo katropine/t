@@ -75,7 +75,11 @@ class User extends EntityCore{
      */
     private $timezone = 'UTC';
     
-    
+    /**
+     *
+     * @OneToMany(targetEntity="EmploymentContract", mappedBy="user", cascade={"all"}, orphanRemoval=true)
+     */
+    protected $employmentContracts;
 
     public function getId() {
         return $this->id;
