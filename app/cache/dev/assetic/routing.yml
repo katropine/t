@@ -1,5 +1,0 @@
-_assetic:
-    resource: .
-    type: assetic
-_app:
-    resource: /home/kriss/www/public_html/timelly/app/config/routing_dev.yml
