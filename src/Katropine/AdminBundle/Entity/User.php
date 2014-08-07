@@ -11,6 +11,7 @@ namespace Katropine\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\ManyToMany;
 use Katropine\AdminBundle\Classes\EntityCore;
 
 /**
@@ -76,8 +77,13 @@ class User extends EntityCore{
     private $timezone = 'UTC';
     
     /**
-     *
-     * @OneToMany(targetEntity="EmploymentContract", mappedBy="user", cascade={"all"}, orphanRemoval=true)
+     * Many-To-Many, Unidirectional
+     * 
+     * @ManyToMany(targetEntity="EmploymentContract")
+     * @ORM\JoinTable(name="timelly_user_has_employmentcontract",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="employmentContract_id", referencedColumnName="id")}
+     * ) 
      */
     protected $employmentContracts;
 
