@@ -73,6 +73,7 @@ class UserController extends Controller{
             ->add('email', 'text', array('label' => 'Email')) 
             ->add('company', 'entity', array( 'class' => 'KatropineAdminBundle:Company', 'property' => 'name'))    
             ->add('password', 'password', array('label' => 'Password'))    
+            ->add('timezone', 'timezone', ['label' => 'Timezone'])    
             ->add('save', 'submit', array( 'attr' => [ 'class' => 'btn btn-primary'] ))
             ->add('back', 'button', array( 'attr' => [ 'onclick' => 'window.history.back();'] ))
             ->getForm();

@@ -10,7 +10,7 @@ namespace Katropine\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToOne;
-
+use Katropine\AdminBundle\Entity\User;
 /**
  * @ORM\Entity(repositoryClass="Katropine\AdminBundle\Repository\WorkTimeRepository")
  * @ORM\Table(name="timelly_worktime")
@@ -54,6 +54,12 @@ class WorkTime {
      */
     protected $user;
     
+    /**
+     * @ORM\Column(name="employment_contract_id", type="integer")
+     * @ManyToOne(targetEntity="Katropine\AdminBundle\Entity\EmploymentContract", cascade={"all"})
+     * @ORM\JoinColumn(referencedColumnName="id")
+     */
+    protected $employmentContract;
     
     public function getId() {
         return $this->id;
@@ -83,7 +89,7 @@ class WorkTime {
         $this->timeStop = $timeStop;
     }
 
-    public function setUser($user) {
+    public function setUser(User $user) {
         $this->user = $user;
     }
     public function getTimezone() {
@@ -104,6 +110,12 @@ class WorkTime {
 
     public function getModified() {
         return $this->modified;
+    }
+    
+    public function getSum(){
+        // TODO: add lunch brake if it is included in workday 
+        $diff = date_diff($this->timeStart, $this->timeStop);
+        return sprintf('%02d:%02d', $diff->h, $diff->i);
     }
 
     
