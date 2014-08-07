@@ -15,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 /**
  * @Route("/dashboard")
- * http://localhost/timelly/web/app_dev.php/admin/dashboard/hello/kriss
+ * http://localhost/timelly/web/app_dev.php/admin/dashboard
  */
 class DashboardController extends Controller{
     

@@ -66,7 +66,7 @@ class User extends EntityCore{
     
     /**
      *
-     * @OneToMany(targetEntity="WorkTime", mappedBy="user", cascade={"all"}, orphanRemoval=true)
+     * @OneToMany(targetEntity="WorkTime", mappedBy="user", cascade={"all"}, orphanRemoval=true, fetch="EXTRA_LAZY")
      */
     protected $workTimes;
     

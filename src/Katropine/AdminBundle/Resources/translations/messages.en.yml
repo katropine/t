@@ -42,3 +42,9 @@ Price: Price
 ACTIVE: Active
 EXPIRED: Expired
 CANCELED: Canceled
+Employment_contracts: Employment contracts
+Vacation_days_per_year: Vacation days / year
+Min_hours_per_week: Min hours / week
+Working_day_duration: Working day duration
+Lunch_break_duration: Lunch break duration
+Lunch_break_excluded: Lunch break excluded

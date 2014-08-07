@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Katropine\AdminBundle\Entity\Company;
 use Katropine\AdminBundle\Entity\SubscriptionOrder;
 use Katropine\AdminBundle\Entity\Subscription;
-use Katropine\AdminBundle\Entity\EmploymentContract;
 
 /**
 * @Route("/company")
@@ -353,59 +352,7 @@ class CompanyController extends Controller{
         );
     }
     
-    /**
-     * @Route("/{id}/employmentcontract/list/page/{page}/", name="company_employment_contracts")
-     * @Template()
-     */
-    public function contractsAction($id = 0, $page = 0){
-        $q = Request::createFromGlobals()->query->get('q');
-        
-        $company = $this->getDoctrine()->getRepository('KatropineAdminBundle:Company')->fetchById($id);
-        // pagination init
-        $maxRows = $myVariable = $this->container->getParameter('max_rows');
-        $maxPaginationLinks = $this->container->getParameter('max_pagination_links');
-        
-        $total = $this->getDoctrine()->getRepository('KatropineAdminBundle:User')->countAllByCompanyId($id);
-        $pagination = new Pagination($maxRows, $maxPaginationLinks);
-        $pg = $pagination->calc($page, $total);
-        $pg->setUrlFirst($this->generateUrl('company_employment_contracts', array('id' => $id,'page' => $pg->first)))
-                ->setUrlPrev($this->generateUrl('company_employment_contracts', array('id' => $id, 'page' => $pg->prev)))
-                ->setUrlIterated($this->generateUrl('company_employment_contracts', array('id' => $id, 'page' => '%s')))
-                ->setUrlNext($this->generateUrl('company_employment_contracts', array('id' => $id,'page' => $pg->next)))
-                ->setUrllast($this->generateUrl('company_employment_contracts', array('id' => $id,'page' => $pg->last)));
-   
-        
-        $contracts = $this->getDoctrine()->getRepository('KatropineAdminBundle:EmploymentContract')->fetchByCompanyId($id, $pagination->getLimit(), $pagination->getOffset());
-        
-        return array(
-            'company' => $company,
-            'contracts' => $contracts,
-            'total'         => $total, 
-            'pagination'    => $pg,
-            'q' => '',
-            'route_name' => 'company_employment_contracts'
-        );
-    }
     
-    /**
-     * @Route("/{id}/employmentcontract/", name="company_employment_contract")
-     * @Template()
-     */
-    public function employmentcontractAction($id){
-        $company = $this->getDoctrine()->getRepository('KatropineAdminBundle:Company')->fetchById($id);
-        
-        if($id > 0){
-            $contract = $this->getDoctrine()->getEntityManager()->find("KatropineAdminBundle:EmploymentContract", $id);
-        }else{
-            $contract = new EmploymentContract();
-        }
-        
-        $form = $this->createFormBuilder($contract);
-        return [
-            'company' => $company,
-            'form' => $form    
-        ];
-    }
     
     /**
      * @Route("/company/{id}/settings/", name="company_settings")

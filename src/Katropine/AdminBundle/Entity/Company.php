@@ -32,14 +32,14 @@ class Company extends EntityCore{
     
     /**
      *
-     * @OneToMany(targetEntity="User", mappedBy="company", cascade={"all"}, orphanRemoval=true)
+     * @OneToMany(targetEntity="User", mappedBy="company", cascade={"all"}, orphanRemoval=true, fetch="EXTRA_LAZY")
      * 
      */
     protected $users;
     
     /**
      *
-     * @OneToMany(targetEntity="SubscriptionOrder", mappedBy="company", cascade={"all"}, orphanRemoval=true)
+     * @OneToMany(targetEntity="SubscriptionOrder", mappedBy="company", cascade={"all"}, orphanRemoval=true, fetch="EXTRA_LAZY")
      */
     protected $subscriptionOrders;
     

@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityRepository;
 
 class EmploymentContractRepository extends EntityRepository{
 
-    public function fetchByCompanyId($cid, $offset, $limit) {
+    public function fetchByCompanyId($cid, $limit = 10, $offset = 0) {
         $dql = "SELECT s FROM KatropineAdminBundle:EmploymentContract s INNER JOIN s.company c WHERE c.id = :cid ORDER BY s.id DESC";
         
         return $this->getEntityManager()->createQuery($dql)
@@ -26,5 +26,22 @@ class EmploymentContractRepository extends EntityRepository{
                 ->setParameter("cid", $cid)
                 ->getSingleScalarResult();
     }
+    
+    public function fetchBatch($q = "", $limit = 10, $offset = 0) {
+        $dql = "SELECT s FROM KatropineAdminBundle:EmploymentContract s WHERE s.name LIKE :name ORDER BY s.id DESC";
+        
+        return $this->getEntityManager()->createQuery($dql)
+                        ->setParameter("name", "%{$q}%")
+                        ->setFirstResult($offset)
+                        ->setMaxResults($limit)
+                        ->getResult();
+    }
 
+    public function countAll($q = "") {
+        $dql = "SELECT COUNT(s) FROM KatropineAdminBundle:EmploymentContract s WHERE s.name LIKE :name";
+        return $this->getEntityManager()->createQuery($dql)
+                ->setParameter("name", "%{$q}%")
+                ->getSingleScalarResult();
+    }
+    
 }

@@ -1,0 +1,98 @@
+{% extends 'KatropineAdminBundle::layout.html.twig' %}
+
+{% block title %}{{'Add_new'|trans}} {{'company'|trans}}{% endblock %}
+
+{% block bodyheading %}
+    {% include 'KatropineAdminBundle:partials:bodyheading.html.twig' with {'title' : 'Work_time'|trans } %}
+{% endblock %}
+
+{% block body %}
+    {% if company is defined and company is not null %}
+     <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <i class="fa fa-check fa-5x"></i>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <p class="announcement-heading">{{company.name}}</p>
+                            <p class="announcement-text">{{total}} {{'orders'|trans}}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="panel-footer announcement-bottom">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            {% include 'KatropineAdminBundle:partials:company-submenu.html.twig' %}
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>    
+    {% endif %}  
+    
+    <div class="container-fluid">
+        <nav class="navbar navbar-default" role="navigation">
+
+            <div class="container-fluid">
+               
+                <div class="navbar-form navbar-right">
+                    {% if company is defined and company is not null %}
+                    <a href="{{path('company_employment_contract_addnew', {'id': company.id})}}" class="btn btn-primary">{{'Add_new'|trans}}</a>
+                    {% else %}
+                    <a href="{{path('employment_contract_addnew')}}" class="btn btn-primary">{{'Add_new'|trans}}</a>    
+                    {% endif %}    
+                </div>
+            </div>
+        </nav>
+    </div>
+                
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="row">
+                <div class="col-md-4"><div class="container-fluid"><h2 class="page-heading user">{{'Work_time'|trans}}</h2></div></div>
+                <div class="col-md-8">
+                    <div class="container-fluid">
+                        <div class="btn-toolbar" role="toolbar">
+                            <div class="btn-group pull-right">paginationHtmlRows</div><div class="btn-group pull-right">{% include 'KatropineAdminBundle:partials:pagination.html.twig' %}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-hover table-striped">
+                <tr>
+                    <th>{{'Id'|trans}}</th>
+                    <th>{{'Time_start'|trans}}</th>
+                    <th>{{'Time_stop'|trans}}</th>
+                    <th>{{'Min_hours_per_week'|trans}}</th>
+                    <th>{{'Timezone'|trans}}</th>
+                    <th>{{'Modified'|trans}}</th>
+                    <th></th>
+                </tr>
+                {% for worktime in worktimes %}
+                <tr>
+                    <td>{{ worktime.id }}</td>
+                    <td><a href="{{ path('employment_contract_edit', {'id' : worktime.id}) }}">{{ worktime.time_start|date("d.m.Y H:i:s") }}</a></td>
+                    <td>{{ worktime.time_stop|date("d.m.Y H:i:s") }}</td>
+                    <td>{{ worktime.timezone }}</td>
+                    <td>{{ (worktime.modified)? 'Yes'|trans:'No'|trans }}</td>
+                    <td align="right"><a href="{{path('employment_contract_edit', {'id': worktime.id })}}" class="btn btn-success btn-xs">{{'edit'|trans}}</a> <a href="{{path('employment_contract_delete', {'id': worktime.id })}}" class="btn btn-danger btn-xs">{{'delete'|trans}}</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+            <div class="container-fluid">
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="btn-group pull-right">paginationHtmlRows</div><div class="btn-group pull-right">{% include 'KatropineAdminBundle:partials:pagination.html.twig' %}</div>
+                </div>
+            </div>
+        </div>
+    </div>       
+{% endblock %}    
