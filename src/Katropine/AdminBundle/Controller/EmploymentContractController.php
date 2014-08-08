@@ -16,6 +16,8 @@ use Katropine\AdminBundle\Classes\Pagination;
 use Symfony\Component\HttpFoundation\Request;
 use Katropine\AdminBundle\Entity\Company;
 use Katropine\AdminBundle\Entity\EmploymentContract;
+use Katropine\AdminBundle\Form\Type\TimeInterval;
+
 /**
 * @Route("/contract")
 * http://localhost/timelly/web/app_dev.php/admin/contract/
@@ -80,17 +82,16 @@ class EmploymentContractController extends Controller{
         
         $company = null;
         $returnUrl = $this->generateUrl('employment_contract_list');
+         if($id > 0){
+            $contract = $this->getDoctrine()->getEntityManager()->find("KatropineAdminBundle:EmploymentContract", $id);
+        }else{
+            $contract = new EmploymentContract();
+        }
         if($cid > 0){
             $company = $this->getDoctrine()->getRepository('KatropineAdminBundle:Company')->fetchById($cid);
             $returnUrl = $this->generateUrl('company_employment_contracts', array('cid' => $company->getId()));
-            if($id > 0){
-                $contract = $this->getDoctrine()->getEntityManager()->find("KatropineAdminBundle:EmploymentContract", $id);
-            }else{
-                $contract = new EmploymentContract();
-            }
+           
             $contract->setCompany($company);
-        }else{
-            $contract = new EmploymentContract();
         }
                 
         $formBuilder = $this->createFormBuilder($contract);
@@ -99,7 +100,7 @@ class EmploymentContractController extends Controller{
         }
         $form = $formBuilder->add('name', 'text', array('label' => 'Name'))
                 ->add('vacationDaysPerYear', 'text', array('label' => 'Vacation_days_per_year'))
-                ->add('minHoursPerWeek', 'time', array('label' => 'Min_hours_per_week', 'attr' => ['class' => 'short inline']))
+                ->add('minHoursPerWeek', 'timeinterval', array('label' => 'Min_hours_per_week', 'attr' => ['class' => 'short inline']))
                 ->add('workingDayDuration', 'time', array('label' => 'Working_day_duration', 'attr' => ['class' => 'short inline']))
                 ->add('lunchBreakDuration', 'time', array('label' => 'Lunch_break_duration', 'attr' => ['class' => 'short inline']))
                 ->add('lunch_break_excluded', 'choice', array('label' => 'Lunch_break_excluded', 'choices' => array("No", "Yes")))
@@ -149,7 +150,7 @@ class EmploymentContractController extends Controller{
         $em = $this->getDoctrine()->getEntityManager();
         $em->remove($contract);
         $em->flush();
-        // show warning that all the users will be deleted!!!
+        
         $this->get('session')->getFlashBag()->set('success', 'message.Record_deleted_successfully');
         return $this->redirect($this->generateUrl('employment_contract_list'));
     }

@@ -41,5 +41,12 @@ class WorkTimeRepository extends EntityRepository {
         return $this->getEntityManager()->createQuery($dql)
                 ->getSingleScalarResult();
     }
+    
+    public function sumDurationByUserId($uid){
+        $dql = "SELECT SUM(w.duration)  FROM KatropineAdminBundle:WorkTime w INNER JOIN w.user u WHERE u.id = :uid ORDER BY w.id";
+        return $this->getEntityManager()->createQuery($dql)
+                ->setParameter("uid", $uid)
+                ->getSingleScalarResult();
+    }
 
 }

@@ -11,6 +11,7 @@ namespace Katropine\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Katropine\AdminBundle\Entity\User;
+use Doctrine\ORM\Events;
 /**
  * @ORM\Entity(repositoryClass="Katropine\AdminBundle\Repository\WorkTimeRepository")
  * @ORM\Table(name="timelly_worktime")
@@ -43,21 +44,26 @@ class WorkTime {
     
     /**
      *
+     * @ORM\Column(type="integer", name="duration", nullable=true)
+     */
+    protected $duration;
+    
+    /**
+     *
      * @ORM\Column(type="boolean", options={"default":0}) 
      */
     protected $modified = false;
 
     /**
-     *
-     * @ManyToOne(targetEntity="Katropine\AdminBundle\Entity\User", cascade={"all"})
-     * @ORM\JoinColumn(referencedColumnName="id")
+     * @ManyToOne(targetEntity="Katropine\AdminBundle\Entity\User")
+     * @ORM\JoinColumn(referencedColumnName="id", nullable=true, onDelete="SET NULL" )
      */
     protected $user;
     
     /**
-     * @ORM\Column(name="employment_contract_id", type="integer")
-     * @ManyToOne(targetEntity="Katropine\AdminBundle\Entity\EmploymentContract", cascade={"all"})
-     * @ORM\JoinColumn(referencedColumnName="id")
+     * @ORM\Column(name="employment_contract_id", type="integer", nullable=true)
+     * @ManyToOne(targetEntity="Katropine\AdminBundle\Entity\EmploymentContract")
+     * @ORM\JoinColumn(referencedColumnName="id", nullable=true , onDelete="SET NULL")
      */
     protected $employmentContract;
     
@@ -112,12 +118,29 @@ class WorkTime {
         return $this->modified;
     }
     
-    public function getSum(){
+    public function getDuration(){
+        return $this->duration;
+    }
+    public function setDuration($duration){
+        $this->duration = $duration;
+    }
+    
+    /**
+     * Tell doctrine that before we persist or update we call the updatedTimestamps() function.
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate 
+     */
+    public function prePersist(){
         // TODO: add lunch brake if it is included in workday 
         $diff = date_diff($this->timeStart, $this->timeStop);
-        return sprintf('%02d:%02d', $diff->h, $diff->i);
+        //$this->duration = strtotime(sprintf('%02d:%02d:00', $diff->h, $diff->i));
+        $this->duration = $diff->h*60+$diff->i;
     }
-
+    
+    public function durationToHoursMinutes(){
+        return date('H:i', mktime(0,$this->duration));
+    }
     
 
 

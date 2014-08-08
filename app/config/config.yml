@@ -81,3 +81,10 @@ fos_user:
 parameters:
     max_rows: 50
     max_pagination_links: 5
+    
+    
+services:
+   timeinterval:
+      class: Katropine\AdminBundle\Form\Type\TimeInterval
+      tags:
+         -  { name: form.type }    

@@ -436,3 +436,17 @@
     {% if not hasClass %} class="btn btn-default" {% endif %} 
 
 {% endblock button_attributes %}
+
+
+
+{% block timeinterval_widget %}
+    {% spaceless %}
+        
+       <div {{ block('widget_container_attributes') }}>
+            <div class="clearfix"></div>
+           {{ form_widget(form.hours) }}
+           {{ form_widget(form.minutes) }}
+        </div>
+ 
+    {% endspaceless %}
+{% endblock %}

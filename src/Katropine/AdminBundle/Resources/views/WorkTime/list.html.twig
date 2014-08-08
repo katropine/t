@@ -18,7 +18,11 @@
                         </div>
                         <div class="col-xs-6 text-right">
                             <p class="announcement-heading">{{user.firstname}} {{user.lastname}}</p>
-                            <p class="announcement-text">{{total}} {{'orders'|trans}}</p>
+                            <p class="announcement-text">
+                                {%  if durationSum is not null %}
+                                    {{durationSum}} {{'work_hours'|trans}}
+                                {% endif %}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -72,7 +76,7 @@
                     <th>{{'Id'|trans}}</th>
                     <th>{{'Time_start'|trans}}</th>
                     <th>{{'Time_stop'|trans}}</th>
-                    <th>{{'Sum'|trans}}</th>
+                    <th>{{'Duration'|trans}}</th>
                     <th>{{'Timezone'|trans}}</th>
                     <th>{{'Modified'|trans}}</th>
                     <th></th>
@@ -82,13 +86,13 @@
                     <td>{{ worktime.id }}</td>
                     <td>{{ worktime.timeStart|date("d.m.Y H:i:s") }}</td>
                     <td>{{ worktime.timeStop|date("d.m.Y H:i:s") }}</td>
-                    <td>{{ worktime.getSum }}</td>
+                    <td>{{ worktime.durationToHoursMinutes }}</td>
                     <td>{{ worktime.timezone }}</td>
                     <td>{{ (worktime.modified)? 'Yes'|trans:'No'|trans }}</td>
                     <td align="right">
                         <a href="{{path('work_time_edit', {'id': worktime.id })}}" class="btn btn-success btn-xs">{{'edit'|trans}}</a> 
                         
-                        <a href="{{path('employment_contract_delete', {'id': worktime.id })}}" class="btn btn-danger btn-xs">{{'delete'|trans}}</a>
+                        <a href="{{path('work_time_delete', {'id': worktime.id })}}" onclick="return confirm('{{'Are_you_sure_you_want_to_delete'|trans}}');" class="btn btn-danger btn-xs">{{'delete'|trans}}</a>
                     </td>
                 </tr>
                 {% endfor %}

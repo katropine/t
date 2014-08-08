@@ -53,7 +53,7 @@
                 </form>
                 <div class="navbar-form navbar-right">
                     {% if company is defined and company is not null %}
-                    <a href="{{path('company_employment_contract_addnew', {'id': company.id})}}" class="btn btn-primary">{{'Add_new'|trans}}</a>
+                    <a href="{{path('company_employment_contract_addnew', {'cid': company.id})}}" class="btn btn-primary">{{'Add_new'|trans}}</a>
                     {% else %}
                     <a href="{{path('employment_contract_addnew')}}" class="btn btn-primary">{{'Add_new'|trans}}</a>    
                     {% endif %}    

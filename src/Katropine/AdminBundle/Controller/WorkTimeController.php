@@ -15,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Katropine\AdminBundle\Classes\Pagination;
 use Symfony\Component\HttpFoundation\Request;
 use Katropine\AdminBundle\Entity\WorkTime;
-
+use Katropine\AdminBundle\Classes\TimeHelper;
 /**
 * @Route("/worktime")
 * http://localhost/timelly/web/app_dev.php/admin/worktime/
@@ -31,6 +31,7 @@ class WorkTimeController extends Controller{
     public function listAction($uid = 0, $cid = 0, $page = 0){
         
         $user = null;
+        $durationSum = null;
         if($uid > 0){
             $total = $this->getDoctrine()->getRepository('KatropineAdminBundle:WorkTime')->countAllByUserId($uid);
             $user = $this->getDoctrine()->getEntityManager()->find("KatropineAdminBundle:User", $uid);
@@ -53,6 +54,7 @@ class WorkTimeController extends Controller{
         
         if($uid > 0){
             $worktimes = $this->getDoctrine()->getRepository('KatropineAdminBundle:WorkTime')->fetchBatch($pagination->getLimit(), $pagination->getOffset());
+            $durationSum = $this->getDoctrine()->getRepository('KatropineAdminBundle:WorkTime')->sumDurationByUserId($uid);
         }else{
             $worktimes = $this->getDoctrine()->getRepository('KatropineAdminBundle:WorkTime')->fetchByUserId($uid, $pagination->getLimit(), $pagination->getOffset());
         }
@@ -64,7 +66,8 @@ class WorkTimeController extends Controller{
             'user'              => $user,
             'total'             => $total, 
             'pagination'        => $pg,
-            'route_name'        => $route_name
+            'route_name'        => $route_name,
+            'durationSum'      =>  TimeHelper::convertToHoursMins($durationSum, "%02d:%02d")
         );
     }
     
@@ -134,8 +137,21 @@ class WorkTimeController extends Controller{
      * @Route("/{id}/delete/", name="work_time_delete")
      * @Template()
      */
-    public function deleteAction(){
+    public function deleteAction($id){
+        if($id == 0){
+            throw $this->createNotFoundException(
+                    'No data found for id ' . $id
+            );
+        }
         
+        $worktime = $this->getDoctrine()->getEntityManager()->find("KatropineAdminBundle:WorkTime", $id);
+        $user = $worktime->getUser();
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->remove($worktime);
+        $em->flush();
+        
+        $this->get('session')->getFlashBag()->set('success', 'message.Record_deleted_successfully');
+        return $this->redirect($this->generateUrl('user_work_time_list', ['page' => 0, 'uid' => $user->getId()]));
     }
 
 }

@@ -32,7 +32,7 @@ class EmploymentContract extends EntityCore{
     /**
      *
      * @ManyToOne(targetEntity="Katropine\AdminBundle\Entity\Company", cascade={"all"})
-     * @ORM\JoinColumn(referencedColumnName="id")
+     * @ORM\JoinColumn(referencedColumnName="id", nullable=true , onDelete="SET NULL")
      */
     protected $company;
     
@@ -44,7 +44,7 @@ class EmploymentContract extends EntityCore{
     
     /**
      *
-     * @ORM\Column(type="time", name="min_hours_per_week", options={"default":"37:30:00"})
+     * @ORM\Column(type="decimal", name="min_hours_per_week", options={"default":160.00})
      */
     protected $minHoursPerWeek;
     
@@ -72,6 +72,60 @@ class EmploymentContract extends EntityCore{
      */
     protected $vacationDaysPerYear;
     
+    /**
+     *
+     * @ORM\Column(type="decimal", name="night_shift_rate", scale=2, options={"default":2.0})
+     */
+    protected $nightShiftRate;
+    /**
+     *
+     * @ORM\Column(type="decimal", name="day_shift_rate", scale=2, options={"default":1.0})
+     */
+    protected $dayShiftRate;
+    /**
+     *
+     * @ORM\Column(type="decimal", name="late_shift_rate", scale=2, options={"default":1.5})
+     */
+    protected $lateShiftRate;
+    /**
+     *
+     * @ORM\Column(type="decimal", name="weekend_shift_rate", scale=2, options={"default":2.0})
+     */
+    protected $weekendShiftRate;
+    
+    
+    /**
+     *
+     * @ORM\Column(type="time", name="night_shift_start", options={"default":"00:01:00"})
+     */
+    protected $nightShiftStart;
+    /**
+     *
+     * @ORM\Column(type="time", name="night_shift_end", options={"default":"08:00:00"})
+     */
+    protected $nightShiftEnd;
+    
+    /**
+     *
+     * @ORM\Column(type="time", name="day_shift_start", options={"default":"08:01:00"})
+     */
+    protected $dayShiftStart;
+    /**
+     *
+     * @ORM\Column(type="time", name="day_shift_end", options={"default":"16:00:00"})
+     */
+    protected $dayShiftEnd;
+    
+    /**
+     *
+     * @ORM\Column(type="time", name="late_shift_start", options={"default":"16:01:00"})
+     */
+    protected $lateShiftStart;
+    /**
+     *
+     * @ORM\Column(type="time", name="late_shift_end", options={"default":"00:00:00"})
+     */
+    protected $lateShiftEnd;
     
     
     public function getId() {
@@ -153,6 +207,86 @@ class EmploymentContract extends EntityCore{
     public function setLunchBreakExcluded($lunchBreakExcluded) {
         $this->lunchBreakExcluded = $lunchBreakExcluded;
     }
+    
+    public function getNightShiftRate() {
+        return $this->nightShiftRate;
+    }
+
+    public function getDayShiftRate() {
+        return $this->dayShiftRate;
+    }
+
+    public function getLateShiftRate() {
+        return $this->lateShiftRate;
+    }
+
+    public function getNightShiftStart() {
+        return $this->nightShiftStart;
+    }
+
+    public function getNightShiftEnd() {
+        return $this->nightShiftEnd;
+    }
+
+    public function getDayShiftStart() {
+        return $this->dayShiftStart;
+    }
+
+    public function getDayShiftEnd() {
+        return $this->dayShiftEnd;
+    }
+
+    public function getLateShiftStart() {
+        return $this->lateShiftStart;
+    }
+
+    public function getLateShiftEnd() {
+        return $this->lateShiftEnd;
+    }
+
+    public function setNightShiftRate($nightShiftRate) {
+        $this->nightShiftRate = $nightShiftRate;
+    }
+
+    public function setDayShiftRate($dayShiftRate) {
+        $this->dayShiftRate = $dayShiftRate;
+    }
+
+    public function setLateShiftRate($lateShiftRate) {
+        $this->lateShiftRate = $lateShiftRate;
+    }
+
+    public function setNightShiftStart($nightShiftStart) {
+        $this->nightShiftStart = $nightShiftStart;
+    }
+
+    public function setNightShiftEnd($nightShiftEnd) {
+        $this->nightShiftEnd = $nightShiftEnd;
+    }
+
+    public function setDayShiftStart($dayShiftStart) {
+        $this->dayShiftStart = $dayShiftStart;
+    }
+
+    public function setDayShiftEnd($dayShiftEnd) {
+        $this->dayShiftEnd = $dayShiftEnd;
+    }
+
+    public function setLateShiftStart($lateShiftStart) {
+        $this->lateShiftStart = $lateShiftStart;
+    }
+
+    public function setLateShiftEnd($lateShiftEnd) {
+        $this->lateShiftEnd = $lateShiftEnd;
+    }
+    public function getWeekendShiftRate() {
+        return $this->weekendShiftRate;
+    }
+
+    public function setWeekendShiftRate($weekendShiftRate) {
+        $this->weekendShiftRate = $weekendShiftRate;
+    }
+
 
 
 }
