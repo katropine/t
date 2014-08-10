@@ -104,6 +104,21 @@ class EmploymentContractController extends Controller{
                 ->add('workingDayDuration', 'time', array('label' => 'Working_day_duration', 'attr' => ['class' => 'short inline']))
                 ->add('lunchBreakDuration', 'time', array('label' => 'Lunch_break_duration', 'attr' => ['class' => 'short inline']))
                 ->add('lunch_break_excluded', 'choice', array('label' => 'Lunch_break_excluded', 'choices' => array("No", "Yes")))
+                
+                ->add('nightShiftRate', 'text', array('label' => 'Night_shift_rate'))
+                ->add('dayShiftRate', 'text', array('label' => 'Day_shift_rate'))
+                ->add('lateShiftRate', 'text', array('label' => 'Late_shift_rate'))
+                ->add('weekendShiftRate', 'text', array('label' => 'Weekend_shift_rate'))
+                
+               
+                
+                ->add('nightShiftStart', 'time', array('label' => 'Night_shift_start', 'attr' => ['class' => 'short inline']))
+                ->add('nightShiftEnd', 'time', array('label' => 'Night_shift_end', 'attr' => ['class' => 'short inline']))
+                ->add('dayShiftStart', 'time', array('label' => 'Day_shift_start', 'attr' => ['class' => 'short inline']))
+                ->add('dayShiftEnd', 'time', array('label' => 'Day_shift_end', 'attr' => ['class' => 'short inline']))
+                ->add('lateShiftStart', 'time', array('label' => 'Late_shift_start', 'attr' => ['class' => 'short inline']))
+                ->add('lateShiftEnd', 'time', array('label' => 'Late_shift_end', 'attr' => ['class' => 'short inline']))
+                
                 ->add('default', 'choice', array('label' => 'Default', 'choices' => array("No", "Yes")))
                 ->add('save', 'submit', array( 'attr' => array( 'class' => 'btn btn-primary') ))
                 ->add('cancel', 'button', array( 'attr' => array( 'onclick' => "window.location = '{$returnUrl}'" ) ))

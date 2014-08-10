@@ -72,14 +72,12 @@ class WorkTimeController extends Controller{
     }
     
     /**
-     * @Route("/addnew/company/{cid}/", name="company_employment_contract_addnew")
+     * @Route("/addnew/company/{cid}/", name="company_work_time_addnew")
      * @Route("/addnew/user/{uid}", name="user_work_time_addnew")
      * @Route("/{id}/edit/", name="work_time_edit")
      * @Template()
      */
     public function saveAction(Request $request, $id = 0, $uid = 0){
-
-        $returnUrl = $this->generateUrl('user_work_time_addnew');
         
         $user = null;
         if($id > 0){
@@ -89,7 +87,7 @@ class WorkTimeController extends Controller{
             }else{
                 $user = $worktime->getUser();
             }
-            $returnUrl = $this->generateUrl('work_time_edit');
+            
         }else{
             $user = $this->getDoctrine()->getEntityManager()->find("KatropineAdminBundle:User", $uid);
             $worktime = new WorkTime();
@@ -98,7 +96,9 @@ class WorkTimeController extends Controller{
             $worktime->setTimeStop(new \DateTime());
             $worktime->setTimezone($user->getTimezone());
             
+            
         }
+        $returnUrl = $this->generateUrl('user_work_time_list', ['uid' => $user->getId()]);
         //exit(\Doctrine\Common\Util\Debug::dump($user));
         $formBuilder = $this->createFormBuilder($worktime);
         

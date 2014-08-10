@@ -9,20 +9,27 @@ namespace Katropine\AdminBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\DataTransformer\ValueToDuplicatesTransformer;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\Options;
 
 class TimeInterval extends AbstractType {
     
     public function buildForm(FormBuilderInterface $builder, array $options){
-        $builder
-            ->addViewTransformer(new ValueToDuplicatesTransformer(array(
-                'hours',
-                'minutes',
-            )))->add('hours', 'text', $options)
-            ->add('minutes', 'text', $options);
+        $builder->add('hours', 'text')
+                ->add('minutes', 'text');
     }
-
+    
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {   
+        
+        
+        $resolver->setDefaults(array(
+            
+        ));
+    }
+    
+ 
     /**
      * 
      * @return string
@@ -30,5 +37,4 @@ class TimeInterval extends AbstractType {
     public function getName() {
         return 'timeinterval';
     }
-
 }
