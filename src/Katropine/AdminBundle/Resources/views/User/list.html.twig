@@ -56,7 +56,10 @@
                     <td>{{ user.email }}</td>
                     <td>{{ user.company.name }}</td>
                     <td align="right">
+                        
                         <a href="{{path('user_work_time_list', {'page': 0, 'uid': user.id})}}" class="btn btn-primary btn-xs">{{'work_times'|trans}}</a>
+                        
+                        <a href="{{path('user_contracts', {'uid': user.id, 'page' : 1})}}" class="btn btn-primary btn-xs">{{'contracts'|trans}}</a>
                         
                         <a href="{{path('user_edit', {'id': user.id})}}" class="btn btn-success btn-xs">{{'edit'|trans}}</a> 
                         

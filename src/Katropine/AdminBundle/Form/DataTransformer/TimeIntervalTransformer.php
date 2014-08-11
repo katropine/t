@@ -30,7 +30,9 @@ class TimeIntervalTransformer implements DataTransformerInterface{
         if (!is_integer($integer)) {
             throw new TransformationFailedException('Expected a integer.');
         }
-        
+        if($integer == 0){
+            return  ['hours' => 0, 'minutes' => 0];
+        }
         $timeString = TimeHelper::convertToHoursMins($integer);
         $value = explode(":", $timeString);
         

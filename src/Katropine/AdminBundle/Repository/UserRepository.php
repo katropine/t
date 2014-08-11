@@ -54,5 +54,12 @@ class UserRepository extends EntityRepository {
                         ->setParameter("id", $id) 
                         ->getSingleScalarResult();
     }
+    
+    public function fetchById($id){
+        $dql = "SELECT u FROM KatropineAdminBundle:User u WHERE u.id = :id";
+        return $this->getEntityManager()->createQuery($dql)
+                ->setParameter("id", $id)
+                ->getSingleScalarResult();
+    }
 
 }

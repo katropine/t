@@ -62,7 +62,7 @@ class WorkTime {
     
     /**
      * @ORM\Column(name="employment_contract_id", type="integer", nullable=true)
-     * @ManyToOne(targetEntity="Katropine\AdminBundle\Entity\EmploymentContract")
+     * @ManyToOne(targetEntity="Katropine\AdminBundle\Entity\EmploymentContractTemplate")
      * @ORM\JoinColumn(referencedColumnName="id", nullable=true , onDelete="SET NULL")
      */
     protected $employmentContract;

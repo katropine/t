@@ -83,7 +83,7 @@
                     <th>{{'Working_day_duration'|trans}}</th>
                     <th>{{'Lunch_break_duration'|trans}}</th>
                     <th>{{'Lunch_break_excluded'|trans}}</th>
-                    <th>{{'Default'|trans}}</th>
+                   
                     <th></th>
                 </tr>
                 {% for contract in contracts %}
@@ -95,7 +95,7 @@
                     <td>{{ contract.workingDayDuration|date('H:i') }}</td>
                     <td>{{ contract.lunchBreakDuration|date('H:i') }}</td>
                     <td>{{ (contract.lunchBreakExcluded)? 'Yes'|trans:'No'|trans }}</td>
-                    <td>{{ (contract.default)? 'Yes'|trans:'No'|trans }}</td>
+                  
                     <td align="right"><a href="{{path('employment_contract_edit', {'id': contract.id })}}" class="btn btn-success btn-xs">{{'edit'|trans}}</a> <a href="{{path('employment_contract_delete', {'id': contract.id })}}" class="btn btn-danger btn-xs">{{'delete'|trans}}</a></td>
                 </tr>
                 {% endfor %}

@@ -21,6 +21,12 @@ use Katropine\AdminBundle\Entity\User;
 class UserController extends Controller{
     
     /**
+     * @Route("/", name="user_default")
+     */
+    public function indexAction(){
+        return $this->redirect($this->generateUrl('user_list', ['page' => 1]));
+    }
+    /**
      * @Route("/list/page/{page}/", name="user_list")
      * @Route("/list/")
      * @Template()
@@ -101,6 +107,9 @@ class UserController extends Controller{
         );
     }
     
+    
+
+
     /**
      * @Route("/saveresponse/", name="user_save_response")
      * @Template()

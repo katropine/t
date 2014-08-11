@@ -23,6 +23,12 @@ use Katropine\AdminBundle\Classes\TimeHelper;
 class WorkTimeController extends Controller{
     
     /**
+     * @Route("/", name="work_time_default")
+     */
+    public function indexAction(){
+        return $this->redirect($this->generateUrl('work_time_list', ['page' => 1]));
+    }
+    /**
      * @Route("/list/page/{page}", name="work_time_list")
      * @Route("/list/page/{page}/company/{cid}", name="company_work_time_list")
      * @Route("/list/page/{page}/user/{uid}", name="user_work_time_list")

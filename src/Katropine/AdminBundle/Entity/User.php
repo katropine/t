@@ -75,15 +75,10 @@ class User extends EntityCore{
      * @ORM\Column(type="string") 
      */
     private $timezone = 'UTC';
-    
+       
     /**
-     * Many-To-Many, Unidirectional
-     * 
-     * @ManyToMany(targetEntity="EmploymentContract")
-     * @ORM\JoinTable(name="timelly_user_has_employmentcontract",
-     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="employment_contract_id", referencedColumnName="id")}
-     * ) 
+     *
+     * @OneToMany(targetEntity="EmploymentContract", mappedBy="user", orphanRemoval=true, fetch="EXTRA_LAZY")
      */
     protected $employmentContracts;
 

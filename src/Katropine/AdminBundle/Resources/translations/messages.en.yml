@@ -43,6 +43,7 @@ ACTIVE: Active
 EXPIRED: Expired
 CANCELED: Canceled
 Employment_contracts: Employment contracts
+contracts: contracts
 Vacation_days_per_year: Vacation days / year
 Min_hours_per_week: Min hours / week
 Working_day_duration: Working day duration

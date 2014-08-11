@@ -23,7 +23,13 @@ use Katropine\AdminBundle\Entity\Subscription;
 * http://localhost/timelly/web/app_dev.php/admin/company/
 */
 class CompanyController extends Controller{
-
+    
+    /**
+     * @Route("/", name="company_default")
+     */
+    public function indexAction(){
+        return $this->redirect($this->generateUrl('company_list'));
+    }
     /**
      * @Route("/list/", name="company_list")
      * @Route("/list/page/{page}/")
