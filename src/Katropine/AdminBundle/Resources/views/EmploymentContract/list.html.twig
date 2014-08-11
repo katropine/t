@@ -91,7 +91,7 @@
                     <td>{{ contract.id }}</td>
                     <td><a href="{{ path('employment_contract_edit', {'id' : contract.id}) }}">{{ contract.name }}</a></td>
                     <td>{{ contract.vacationDaysPerYear }}</td>
-                    <td>{{ contract.minHoursPerWeek|date('H:i') }}</td>
+                    <td>{{ contract.minHoursPerWeek }}</td>
                     <td>{{ contract.workingDayDuration|date('H:i') }}</td>
                     <td>{{ contract.lunchBreakDuration|date('H:i') }}</td>
                     <td>{{ (contract.lunchBreakExcluded)? 'Yes'|trans:'No'|trans }}</td>

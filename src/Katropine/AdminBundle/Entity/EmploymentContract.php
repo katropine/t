@@ -44,7 +44,7 @@ class EmploymentContract extends EntityCore{
     
     /**
      *
-     * @ORM\Column(type="decimal", name="min_hours_per_week", options={"default":160.00})
+     * @ORM\Column(type="integer", name="min_hours_per_week")
      */
     protected $minHoursPerWeek;
     

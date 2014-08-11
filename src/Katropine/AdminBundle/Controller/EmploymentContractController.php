@@ -99,16 +99,16 @@ class EmploymentContractController extends Controller{
             $formBuilder->add('company', 'entity', array( 'class' => 'KatropineAdminBundle:Company', 'property' => 'name'));
         }
         $form = $formBuilder->add('name', 'text', array('label' => 'Name'))
-                ->add('vacationDaysPerYear', 'text', array('label' => 'Vacation_days_per_year'))
+                ->add('vacationDaysPerYear', 'text', array('label' => 'Vacation_days_per_year',  'attr' => ['class' => 'form-control tiny']))
                 ->add('minHoursPerWeek', 'timeinterval', array('label' => 'Min_hours_per_week', 'attr' => ['class' => 'short inline']))
                 ->add('workingDayDuration', 'time', array('label' => 'Working_day_duration', 'attr' => ['class' => 'short inline']))
                 ->add('lunchBreakDuration', 'time', array('label' => 'Lunch_break_duration', 'attr' => ['class' => 'short inline']))
                 ->add('lunch_break_excluded', 'choice', array('label' => 'Lunch_break_excluded', 'choices' => array("No", "Yes")))
                 
-                ->add('nightShiftRate', 'text', array('label' => 'Night_shift_rate'))
-                ->add('dayShiftRate', 'text', array('label' => 'Day_shift_rate'))
-                ->add('lateShiftRate', 'text', array('label' => 'Late_shift_rate'))
-                ->add('weekendShiftRate', 'text', array('label' => 'Weekend_shift_rate'))
+                ->add('nightShiftRate', 'decimal', array('label' => 'Night_shift_rate', 'attr' => ['class' => 'tiny']))
+                ->add('dayShiftRate', 'decimal', array('label' => 'Day_shift_rate', 'attr' => ['class' => 'tiny']))
+                ->add('lateShiftRate', 'decimal', array('label' => 'Late_shift_rate', 'attr' => ['class' => 'tiny']))
+                ->add('weekendShiftRate', 'decimal', array('label' => 'Weekend_shift_rate', 'attr' => ['class' => 'tiny']))
                 
                
                 

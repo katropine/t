@@ -1,24 +1,22 @@
 <?php
-
 namespace Katropine\AdminBundle\Form\Type;
 
 /**
  * Description of MinWorkTimePerDay
  *
  * @author Kristian Beres <kristian@katropine.com>
- * @since Aug 8, 2014
+ * @since Aug 11, 2014
  */
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Katropine\AdminBundle\Form\DataTransformer\TimeIntervalTransformer;
+use Katropine\AdminBundle\Form\DataTransformer\DecimalTransformer;
 
-class TimeInterval extends AbstractType {
+class Decimal extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $builder->add('hours', 'text')
-                ->add('minutes', 'text')
-                ->addModelTransformer(new TimeIntervalTransformer());
+        $builder->add('decimal', 'text')
+                ->addModelTransformer(new DecimalTransformer());
         
 //        $builder->add(
 //            $builder->create('hours', 'text')
@@ -43,8 +41,7 @@ class TimeInterval extends AbstractType {
      * @return string
      */
     public function getName() {
-        return 'timeinterval';
+        return 'decimal';
     }
-    
-    
+
 }

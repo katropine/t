@@ -84,7 +84,11 @@ parameters:
     
     
 services:
-   timeinterval:
+    timeinterval:
       class: Katropine\AdminBundle\Form\Type\TimeInterval
       tags:
-         -  { name: form.type }    
+         -  { name: form.type }   
+    decimal:
+      class: Katropine\AdminBundle\Form\Type\Decimal
+      tags:
+         -  { name: form.type }         

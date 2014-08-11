@@ -162,13 +162,28 @@ table.tablesorter thead tr th:hover {
   }
 
 }
-.short{
+.form-control.short{
     display: block;
     content: " ";
+    width: 200px;
 }
+
 .short.inline select,
 .short.inline input{
     width: 200px;
+    display: inline-block;
+    content: " ";
+}
+.tiny .form-control,
+.form-control.tiny{
+    width: 80px;
+    content: " ";
+}
+
+
+.tiny.inline select,
+.tiny.inline input{
+    width: 80px;
     display: inline-block;
     content: " ";
 }
