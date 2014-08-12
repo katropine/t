@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block body %}
-    {% if company is defined and company is not null %}
+    {% if user is defined and user is not null %}
      <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-info">
@@ -17,13 +17,8 @@
                             <i class="fa fa-check fa-5x"></i>
                         </div>
                         <div class="col-xs-6 text-right">
-                            {% if user is not null %}
                             <p class="announcement-heading">{{user.firstname}} {{user.lastname}}</p>
-                            <p class="announcement-text">{{company.name}}</p>
-                            {% else %}    
-                            <p class="announcement-heading">{{company.name}}</p>
-                            <p class="announcement-text">{{total}} {{'orders'|trans}}</p>
-                            {% endif %}
+                            <p class="announcement-text">{{user.company.name}} </p>
                         </div>
                     </div>
                 </div>
@@ -31,6 +26,7 @@
                 <div class="panel-footer announcement-bottom">
                     <div class="row">
                         <div class="col-xs-6">
+                            {% set company = user.company %}
                             {% include 'KatropineAdminBundle:partials:company-submenu.html.twig' %}
                         </div>
                         <div class="col-xs-6 text-right">
@@ -57,6 +53,9 @@
 
                 </form>
                 <div class="navbar-form navbar-right">
+                    {% if user is defined and user is not null %}
+                    <a href="{{path('company_user_employment_contracts', {'id' : user.company.id,'uid': user.id})}}" class="btn btn-primary">{{'Assign_from_template'|trans}}</a>
+                    {% endif %} 
                     {% if company is defined and company is not null %}
                     <a href="{{path('company_employment_contract_addnew', {'cid': company.id})}}" class="btn btn-primary">{{'Add_new'|trans}}</a>
                     {% else %}
@@ -101,13 +100,7 @@
                     <td>{{ contract.lunchBreakDuration|date('H:i') }}</td>
                     <td>{{ (contract.lunchBreakExcluded)? 'Yes'|trans:'No'|trans }}</td>
                   
-                    <td align="right">
-                        {% if user is not null %}
-                         <a href="{{path('employment_contract_assign', {'id': contract.id, 'uid': user.id })}}" class="btn btn-primary btn-xs">{{'Assign_to'|trans}} {{user.firstname}} {{user.lastname}}</a>    
-                        {% endif %}    
-                        <a href="{{path('employment_contract_edit', {'id': contract.id })}}" class="btn btn-success btn-xs">{{'edit'|trans}}</a> 
-                        
-                        <a href="{{path('employment_contract_delete', {'id': contract.id })}}" class="btn btn-danger btn-xs">{{'delete'|trans}}</a></td>
+                    <td align="right"><a href="{{path('employment_contract_edit', {'id': contract.id })}}" class="btn btn-success btn-xs">{{'edit'|trans}}</a> <a href="{{path('employment_contract_delete', {'id': contract.id })}}" class="btn btn-danger btn-xs">{{'delete'|trans}}</a></td>
                 </tr>
                 {% endfor %}
             </table>

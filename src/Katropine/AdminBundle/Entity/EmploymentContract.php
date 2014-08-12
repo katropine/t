@@ -11,7 +11,6 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Katropine\AdminBundle\Entity\EmploymentContractTemplate;
 /**
  * @ORM\Entity(repositoryClass="Katropine\AdminBundle\Repository\EmploymentContractRepository")
- * @ORM\Table(name="timelly_employment_contract")
  * @ORM\HasLifecycleCallbacks
  */
 class EmploymentContract extends EmploymentContractTemplate{

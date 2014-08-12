@@ -11,8 +11,10 @@ use Doctrine\ORM\Mapping\ManyToOne;
 use Katropine\AdminBundle\Classes\EntityCore;
 /**
  * @ORM\Entity(repositoryClass="Katropine\AdminBundle\Repository\EmploymentContractTemplateRepository")
- * @ORM\Table(name="timelly_employment_contract_template")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\Table(name="timelly_employment_contract")
  * @ORM\HasLifecycleCallbacks
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
  */
 class EmploymentContractTemplate extends EntityCore{
     
@@ -121,39 +123,10 @@ class EmploymentContractTemplate extends EntityCore{
      */
     protected $lateShiftEnd;
     
-    
     public function getId() {
         return $this->id;
     }
 
-    public function getDefault() {
-        return $this->default;
-    }
-
-    public function getEmploymentType() {
-        return $this->employmentType;
-    }
-
-    public function getVacationDaysPerYear() {
-        return $this->vacationDaysPerYear;
-    }
-
-    public function setId($id) {
-        $this->id = $id;
-    }
-
-    public function setDefault($default) {
-        $this->default = $default;
-    }
-
-    public function setEmploymentType($employmentType) {
-        $this->employmentType = $employmentType;
-    }
-
-    public function setVacationDaysPerYear($vacationDaysPerYear) {
-        $this->vacationDaysPerYear = $vacationDaysPerYear;
-    }
-    
     public function getCompany() {
         return $this->company;
     }
@@ -178,30 +151,10 @@ class EmploymentContractTemplate extends EntityCore{
         return $this->lunchBreakExcluded;
     }
 
-    public function setCompany($company) {
-        $this->company = $company;
+    public function getVacationDaysPerYear() {
+        return $this->vacationDaysPerYear;
     }
 
-    public function setName($name) {
-        $this->name = $name;
-    }
-
-    public function setMinHoursPerWeek($minHoursPerWeek) {
-        $this->minHoursPerWeek = $minHoursPerWeek;
-    }
-
-    public function setWorkingDayDuration($workingDayDuration) {
-        $this->workingDayDuration = $workingDayDuration;
-    }
-
-    public function setLunchBreakDuration($lunchBreakDuration) {
-        $this->lunchBreakDuration = $lunchBreakDuration;
-    }
-
-    public function setLunchBreakExcluded($lunchBreakExcluded) {
-        $this->lunchBreakExcluded = $lunchBreakExcluded;
-    }
-    
     public function getNightShiftRate() {
         return $this->nightShiftRate;
     }
@@ -212,6 +165,10 @@ class EmploymentContractTemplate extends EntityCore{
 
     public function getLateShiftRate() {
         return $this->lateShiftRate;
+    }
+
+    public function getWeekendShiftRate() {
+        return $this->weekendShiftRate;
     }
 
     public function getNightShiftStart() {
@@ -238,6 +195,38 @@ class EmploymentContractTemplate extends EntityCore{
         return $this->lateShiftEnd;
     }
 
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    public function setCompany($company) {
+        $this->company = $company;
+    }
+
+    public function setName($name) {
+        $this->name = $name;
+    }
+
+    public function setMinHoursPerWeek($minHoursPerWeek) {
+        $this->minHoursPerWeek = $minHoursPerWeek;
+    }
+
+    public function setWorkingDayDuration($workingDayDuration) {
+        $this->workingDayDuration = $workingDayDuration;
+    }
+
+    public function setLunchBreakDuration($lunchBreakDuration) {
+        $this->lunchBreakDuration = $lunchBreakDuration;
+    }
+
+    public function setLunchBreakExcluded($lunchBreakExcluded) {
+        $this->lunchBreakExcluded = $lunchBreakExcluded;
+    }
+
+    public function setVacationDaysPerYear($vacationDaysPerYear) {
+        $this->vacationDaysPerYear = $vacationDaysPerYear;
+    }
+
     public function setNightShiftRate($nightShiftRate) {
         $this->nightShiftRate = $nightShiftRate;
     }
@@ -248,6 +237,10 @@ class EmploymentContractTemplate extends EntityCore{
 
     public function setLateShiftRate($lateShiftRate) {
         $this->lateShiftRate = $lateShiftRate;
+    }
+
+    public function setWeekendShiftRate($weekendShiftRate) {
+        $this->weekendShiftRate = $weekendShiftRate;
     }
 
     public function setNightShiftStart($nightShiftStart) {
@@ -272,13 +265,6 @@ class EmploymentContractTemplate extends EntityCore{
 
     public function setLateShiftEnd($lateShiftEnd) {
         $this->lateShiftEnd = $lateShiftEnd;
-    }
-    public function getWeekendShiftRate() {
-        return $this->weekendShiftRate;
-    }
-
-    public function setWeekendShiftRate($weekendShiftRate) {
-        $this->weekendShiftRate = $weekendShiftRate;
     }
 
 

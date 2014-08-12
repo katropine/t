@@ -33,6 +33,7 @@ class EmploymentContractTemplateController extends Controller{
     /**
      * @Route("/list/page/{page}/", name="employment_contract_list")
      * @Route("/list/company/{id}/page/{page}/", name="company_employment_contracts")
+     * @Route("/list/company/{id}/user/{uid}/page/{page}/", name="company_user_employment_contracts")
      * @Template()
      */
     public function listAction($id = 0, $page = 0, $uid = 0){
@@ -55,11 +56,11 @@ class EmploymentContractTemplateController extends Controller{
         
         $pagination = new Pagination($maxRows, $maxPaginationLinks);
         $pg = $pagination->calc($page, $total);
-        $pg->setUrlFirst($this->generateUrl($route_name, array('id' => $id,'page' => $pg->first, 'q' => $q)))
-                ->setUrlPrev($this->generateUrl($route_name, array('id' => $id, 'page' => $pg->prev, 'q' => $q)))
-                ->setUrlIterated($this->generateUrl($route_name, array('id' => $id, 'page' => '%s', 'q' => $q)))
-                ->setUrlNext($this->generateUrl($route_name, array('id' => $id,'page' => $pg->next, 'q' => $q)))
-                ->setUrllast($this->generateUrl($route_name, array('id' => $id,'page' => $pg->last, 'q' => $q)));
+        $pg->setUrlFirst($this->generateUrl($route_name, array('id' => $id, 'uid' => $uid ,'page' => $pg->first, 'q' => $q)))
+                ->setUrlPrev($this->generateUrl($route_name, array('id' => $id, 'uid' => $uid ,'page' => $pg->prev, 'q' => $q)))
+                ->setUrlIterated($this->generateUrl($route_name, array('id' => $id, 'uid' => $uid ,'page' => '%s', 'q' => $q)))
+                ->setUrlNext($this->generateUrl($route_name, array('id' => $id,'uid' => $uid ,'page' => $pg->next, 'q' => $q)))
+                ->setUrllast($this->generateUrl($route_name, array('id' => $id,'uid' => $uid ,'page' => $pg->last, 'q' => $q)));
    
         if($id > 0){
             $contracts = $this->getDoctrine()->getRepository('KatropineAdminBundle:EmploymentContractTemplate')->fetchByCompanyId($id, $pagination->getLimit(), $pagination->getOffset());
@@ -67,6 +68,9 @@ class EmploymentContractTemplateController extends Controller{
             $contracts = $this->getDoctrine()->getRepository('KatropineAdminBundle:EmploymentContractTemplate')->fetchBatch($q, $pagination->getLimit(), $pagination->getOffset());
         }
         
+        if($uid > 0){
+            $user = $this->getDoctrine()->getEntityManager()->find("KatropineAdminBundle:User", $uid);
+        }
         
         return array(
             'company'   => $company,
@@ -74,7 +78,8 @@ class EmploymentContractTemplateController extends Controller{
             'total'     => $total, 
             'pagination'=> $pg,
             'q'         => '',
-            'route_name'=>$route_name
+            'route_name'=> $route_name, 
+            'user'       => $user 
         );
     }
     
