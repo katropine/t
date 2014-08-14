@@ -65,7 +65,6 @@
                         <td><a href="{{path('user_edit', {'id': user.id})}}">{{ user.lastname }}</a></td>
                         <td><a href="{{path('user_edit', {'id': user.id})}}">{{ user.email }}</a></td>
                         <td align="right">
-                            <a href="{{path('user_contracts', {'uid': user.id})}}" class="btn btn-primary btn-xs">{{'contracts'|trans}}</a>
                             <a href="{{path('user_edit', {'id': user.id})}}" class="btn btn-success btn-xs">{{'edit'|trans}}</a> 
                             <a href="#" class="btn btn-danger btn-xs">{{'delete'|trans}}</a></td>
                     </tr>

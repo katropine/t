@@ -85,10 +85,21 @@ parameters:
     
 services:
     timeinterval:
-      class: Katropine\AdminBundle\Form\Type\TimeInterval
-      tags:
-         -  { name: form.type }   
+        class: Katropine\AdminBundle\Form\Type\TimeInterval
+        tags:
+            -  { name: form.type }   
     decimal:
-      class: Katropine\AdminBundle\Form\Type\Decimal
-      tags:
-         -  { name: form.type }         
+        class: Katropine\AdminBundle\Form\Type\Decimal
+        tags:
+            -  { name: form.type } 
+    katropine.twig.katropine_extension:
+        class: Katropine\AdminBundle\Twig\KatropineExtension
+        tags:
+            - { name: twig.extension }        
+     
+knp_menu:
+    twig:  # use "twig: false" to disable the Twig extension and the TwigRenderer
+        template: KatropineAdminBundle:Default:knp_menu.html.twig
+    templating: false # if true, enables the helper for PHP templates
+    default_renderer: twig # The renderer to use, list is also available by defa         
+         

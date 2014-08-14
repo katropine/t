@@ -14,8 +14,7 @@ use Katropine\AdminBundle\Entity\EmploymentContractTemplate;
  * @ORM\HasLifecycleCallbacks
  */
 class EmploymentContract extends EmploymentContractTemplate{
-    
-        
+ 
     /**
      *
      * @ORM\Column(type="boolean", name="def", options={"default":0})
@@ -73,5 +72,8 @@ class EmploymentContract extends EmploymentContractTemplate{
     public function setEndDate($endDate) {
         $this->endDate = $endDate;
     }
-
+    
+    public function __toString() {
+        return $this->name;
+    }
 }

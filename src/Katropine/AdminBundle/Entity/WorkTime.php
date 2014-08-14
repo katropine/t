@@ -61,8 +61,8 @@ class WorkTime {
     protected $user;
     
     /**
-     * @ORM\Column(name="employment_contract_id", type="integer", nullable=true)
-     * @ManyToOne(targetEntity="Katropine\AdminBundle\Entity\EmploymentContractTemplate")
+     * 
+     * @ManyToOne(targetEntity="Katropine\AdminBundle\Entity\EmploymentContract")
      * @ORM\JoinColumn(referencedColumnName="id", nullable=true , onDelete="SET NULL")
      */
     protected $employmentContract;
@@ -141,7 +141,15 @@ class WorkTime {
     public function durationToHoursMinutes(){
         return date('H:i', mktime(0,$this->duration));
     }
-    
+    public function getEmploymentContract() {
+        return $this->employmentContract;
+    }
+
+    public function setEmploymentContract($employmentContract) {
+        $this->employmentContract = $employmentContract;
+    }
+
+
 
 
 }

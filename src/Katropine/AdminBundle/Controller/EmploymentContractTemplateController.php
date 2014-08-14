@@ -180,4 +180,29 @@ class EmploymentContractTemplateController extends Controller{
         $this->get('session')->getFlashBag()->set('success', 'message.Record_deleted_successfully');
         return $this->redirect($this->generateUrl('employment_contract_list'));
     }
+    
+    /**
+     * @Route("/contract-template/{id}/user/{uid}/", name="employment_contract_assign")
+     * @Template()
+     */
+    public function assignAction($id, $uid){
+        
+        if($id > 0 && $uid > 0){
+            $user = $this->getDoctrine()->getEntityManager()->find("KatropineAdminBundle:User", $uid);
+            $contractTemplate = $this->getDoctrine()->getEntityManager()->find("KatropineAdminBundle:EmploymentContractTemplate", $id);
+        }
+        
+        $contract = PhpObject::factory()->cast(new EmploymentContract(), $contractTemplate);
+        $contract->setUser($user);
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->persist($contract);
+        $em->flush();
+        
+        if($contract->getId() > 0){
+            $this->get('session')->getFlashBag()->set('success', 'message.Record_updated_successfully');
+        }else{
+            $this->get('session')->getFlashBag()->set('success', 'message.New_record_added_successfully');
+        }
+        return $this->redirect($returnUrl);
+    }
 }

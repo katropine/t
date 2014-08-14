@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new Katropine\UserBundle\UserBundle(),
             new Service\ServiceBundle\ServiceServiceBundle(),
             new Katropine\AdminBundle\KatropineAdminBundle(),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityRepository;
 class EmploymentContractTemplateRepository extends EntityRepository{
 
     public function fetchByCompanyId($cid, $limit = 10, $offset = 0) {
-        $dql = "SELECT s FROM KatropineAdminBundle:EmploymentContractTemplate s INNER JOIN s.company c WHERE c.id = :cid ORDER BY s.id DESC";
+        $dql = "SELECT s FROM KatropineAdminBundle:EmploymentContractTemplate s INNER JOIN s.company c WHERE c.id = :cid AND s INSTANCE OF KatropineAdminBundle:EmploymentContractTemplate ORDER BY s.id DESC";
         
         return $this->getEntityManager()->createQuery($dql)
                         ->setParameter("cid", $cid)
@@ -21,7 +21,7 @@ class EmploymentContractTemplateRepository extends EntityRepository{
     }
 
     public function countAllByCompanyId($cid = 0) {
-        $dql = "SELECT COUNT(s) FROM KatropineAdminBundle:EmploymentContractTemplate s INNER JOIN s.company c WHERE c.id = :cid";
+        $dql = "SELECT COUNT(s) FROM KatropineAdminBundle:EmploymentContractTemplate s INNER JOIN s.company c WHERE s.id = :cid AND s INSTANCE OF KatropineAdminBundle:EmploymentContractTemplate";
         return $this->getEntityManager()->createQuery($dql)
                 ->setParameter("cid", $cid)
                 ->getSingleScalarResult();
@@ -29,7 +29,7 @@ class EmploymentContractTemplateRepository extends EntityRepository{
     
    
     public function fetchBatch($q = "", $limit = 10, $offset = 0) {
-        $dql = "SELECT s FROM KatropineAdminBundle:EmploymentContractTemplate s WHERE s.name LIKE :name ORDER BY s.id DESC";
+        $dql = "SELECT s FROM KatropineAdminBundle:EmploymentContractTemplate s WHERE s.name LIKE :name AND s INSTANCE OF KatropineAdminBundle:EmploymentContractTemplate ORDER BY s.id DESC";
         
         return $this->getEntityManager()->createQuery($dql)
                         ->setParameter("name", "%{$q}%")
@@ -39,7 +39,7 @@ class EmploymentContractTemplateRepository extends EntityRepository{
     }
 
     public function countAll($q = "") {
-        $dql = "SELECT COUNT(s) FROM KatropineAdminBundle:EmploymentContractTemplate s WHERE s.name LIKE :name";
+        $dql = "SELECT COUNT(s) FROM KatropineAdminBundle:EmploymentContractTemplate s WHERE s.name LIKE :name AND s INSTANCE OF KatropineAdminBundle:EmploymentContractTemplate";
         return $this->getEntityManager()->createQuery($dql)
                 ->setParameter("name", "%{$q}%")
                 ->getSingleScalarResult();

@@ -36,7 +36,9 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
-          <ul class="nav navbar-nav side-nav">
+            {{ knp_menu_render('KatropineAdminBundle:Builder:mainMenu') }}
+            
+         {# <ul class="nav navbar-nav side-nav">
             <li class="active"><a href="{{ path('dashboard_index') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
             <li><a href="{{ path('company_list') }}"><span class="fa fa-table"></span> Companies</a></li>
             <li><a href="{{ path('user_list') }}"><span class="fa fa-bar-chart-o"></span> Users</a></li>
@@ -54,7 +56,7 @@
                 <li><a href="#">Last Item</a></li>
               </ul>
             </li>
-          </ul>
+          </ul>#}
 
           <ul class="nav navbar-nav navbar-right navbar-user">
             <li class="dropdown messages-dropdown">

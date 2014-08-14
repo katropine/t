@@ -51,3 +51,11 @@ Lunch_break_duration: Lunch break duration
 Lunch_break_excluded: Lunch break excluded
 work_times: work times
 Are_you_sure_you_want_to_delete: Are you sure you want to delete?
+mainmenu:
+    Dashboard: Dashboard
+    Companies: Companies
+    Users: Users
+    Subscriptions: Subscriptions
+    Employment_contracts: User Empl. contracts
+    Employment_contracts_templates: Empl. contract templates
+   

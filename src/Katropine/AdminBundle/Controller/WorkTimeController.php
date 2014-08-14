@@ -16,6 +16,7 @@ use Katropine\AdminBundle\Classes\Pagination;
 use Symfony\Component\HttpFoundation\Request;
 use Katropine\AdminBundle\Entity\WorkTime;
 use Katropine\AdminBundle\Classes\TimeHelper;
+use Doctrine\ORM\EntityRepository;
 /**
 * @Route("/worktime")
 * http://localhost/timelly/web/app_dev.php/admin/worktime/
@@ -68,12 +69,12 @@ class WorkTimeController extends Controller{
         
         return array(
             'worktimes'         => $worktimes, 
-            'worktimeCount'    => $worktimeCount,
+            'worktimeCount'     => $worktimeCount,
             'user'              => $user,
             'total'             => $total, 
             'pagination'        => $pg,
             'route_name'        => $route_name,
-            'durationSum'      =>  TimeHelper::convertToHoursMins($durationSum, "%02d:%02d")
+            'durationSum'       =>  TimeHelper::convertToHoursMins($durationSum, "%02d:%02d")
         );
     }
     
@@ -108,12 +109,30 @@ class WorkTimeController extends Controller{
         //exit(\Doctrine\Common\Util\Debug::dump($user));
         $formBuilder = $this->createFormBuilder($worktime);
         
-        $form = $formBuilder->add('timeStart', 'datetime', ['label' => 'Time_start', 'attr' => ['class' => 'short inline']])
+        if($uid > 0){
+//            $employmentContracts = $this->getDoctrine()->getRepository('KatropineAdminBundle:EmploymentContract')->fetchAllByCompanyId($user->getCompany()->getId());
+//            
+//            $dql = "SELECT s FROM KatropineAdminBundle:EmploymentContract s INNER JOIN s.company c WHERE c.id = :cid AND s INSTANCE OF KatropineAdminBundle:EmploymentContract ORDER BY s.id DESC";
+//            
+            $formBuilder->add('employmentContract', 'entity', array(
+                'class' => 'KatropineAdminBundle:EmploymentContract',
+                'query_builder' => function(EntityRepository $repository) use ($user){
+                    return $repository->createQueryBuilder('s')
+                                ->innerJoin('s.company','c')
+                                ->where('c.id = :cid AND s INSTANCE OF KatropineAdminBundle:EmploymentContract')
+                                ->setParameter('cid', $user->getCompany()->getId());
+                    }
+            ));
+        }else{
+            new \Symfony\Component\Security\Acl\Exception\Exception('this should not work');
+        }
+        
+        $formBuilder->add('timeStart', 'datetime', ['label' => 'Time_start', 'attr' => ['class' => 'short inline']])
                             ->add('timeStop', 'datetime', ['label' => 'Time_stop', 'attr' => ['class' => 'short inline']])
                             ->add('timezone', 'timezone', ['label' => 'Timezone'])
                             ->add('save', 'submit', array( 'attr' => array( 'class' => 'btn btn-primary') ))
-                            ->add('cancel', 'button', array( 'attr' => array( 'onclick' => "window.location = '{$returnUrl}'" ) ))
-                            ->getForm();
+                            ->add('cancel', 'button', array( 'attr' => array( 'onclick' => "window.location = '{$returnUrl}'" ) ));
+        $form = $formBuilder->getForm();                    
         // do not touch modified, that one is only for users
         
         $form->handleRequest($request);

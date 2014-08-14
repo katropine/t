@@ -7,40 +7,9 @@
 {% endblock %}
 
 {% block body %}
-    {% if user is defined and user is not null %}
-     <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <i class="fa fa-check fa-5x"></i>
-                        </div>
-                        <div class="col-xs-6 text-right">
-                            <p class="announcement-heading">{{user.firstname}} {{user.lastname}}</p>
-                            <p class="announcement-text">{{user.company.name}} </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="panel-footer announcement-bottom">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            {% set company = user.company %}
-                            {% include 'KatropineAdminBundle:partials:company-submenu.html.twig' %}
-                        </div>
-                        <div class="col-xs-6 text-right">
-                            <i class="fa fa-arrow-circle-right"></i>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-    </div>    
-    {% endif %}  
     
-    <div class="container-fluid">
+    
+{#    <div class="container-fluid">
         <nav class="navbar navbar-default" role="navigation">
 
             <div class="container-fluid">
@@ -64,7 +33,7 @@
                 </div>
             </div>
         </nav>
-    </div>
+    </div>#}
                 
     <div class="container-fluid">
         <div class="panel panel-default">
@@ -82,25 +51,29 @@
                 <tr>
                     <th>{{'Id'|trans}}</th>
                     <th>{{'Name'|trans}}</th>
+                    <th>{{'Company'|trans}}</th>
+                    <th>{{'User'|trans}}</th>
+                    <th>{{'Default'|trans}}</th>
                     <th>{{'Vacation_days_per_year'|trans}}</th>
                     <th>{{'Min_hours_per_week'|trans}}</th>
                     <th>{{'Working_day_duration'|trans}}</th>
                     <th>{{'Lunch_break_duration'|trans}}</th>
                     <th>{{'Lunch_break_excluded'|trans}}</th>
-                   
                     <th></th>
                 </tr>
                 {% for contract in contracts %}
                 <tr>
                     <td>{{ contract.id }}</td>
                     <td><a href="{{ path('employment_contract_edit', {'id' : contract.id}) }}">{{ contract.name }}</a></td>
+                    <td>{{ contract.user.firstname }} {{ contract.user.firstname }}</td>
+                    <td>{{ contract.company.name }}</td>
+                    <td>{{ (contract.default)? 'Yes'|trans|label('success')|raw:'No'|trans|label('default')|raw  }}</td>
                     <td>{{ contract.vacationDaysPerYear }}</td>
-                    <td>{{ contract.minHoursPerWeek }}</td>
+                    <td>{{ contract.minHoursPerWeek|timeinterval }}</td>
                     <td>{{ contract.workingDayDuration|date('H:i') }}</td>
                     <td>{{ contract.lunchBreakDuration|date('H:i') }}</td>
                     <td>{{ (contract.lunchBreakExcluded)? 'Yes'|trans:'No'|trans }}</td>
-                  
-                    <td align="right"><a href="{{path('employment_contract_edit', {'id': contract.id })}}" class="btn btn-success btn-xs">{{'edit'|trans}}</a> <a href="{{path('employment_contract_delete', {'id': contract.id })}}" class="btn btn-danger btn-xs">{{'delete'|trans}}</a></td>
+                    <td align="right"><a href="{{path('contract_edit', {'id': contract.id })}}" class="btn btn-success btn-xs">{{'edit'|trans}}</a> <a href="{{path('employment_contract_delete', {'id': contract.id })}}" class="btn btn-danger btn-xs">{{'delete'|trans}}</a></td>
                 </tr>
                 {% endfor %}
             </table>

@@ -84,6 +84,7 @@
                     <th>{{'Id'|trans}}</th>
                     <th>{{'Name'|trans}}</th>
                     <th>{{'Vacation_days_per_year'|trans}}</th>
+                    <th>{{'Company'|trans}}</th>
                     <th>{{'Min_hours_per_week'|trans}}</th>
                     <th>{{'Working_day_duration'|trans}}</th>
                     <th>{{'Lunch_break_duration'|trans}}</th>
@@ -95,8 +96,9 @@
                 <tr>
                     <td>{{ contract.id }}</td>
                     <td><a href="{{ path('employment_contract_edit', {'id' : contract.id}) }}">{{ contract.name }}</a></td>
+                    <td>{{ contract.company.name }}</td>
                     <td>{{ contract.vacationDaysPerYear }}</td>
-                    <td>{{ contract.minHoursPerWeek }}</td>
+                    <td>{{ contract.minHoursPerWeek|timeinterval }}</td>
                     <td>{{ contract.workingDayDuration|date('H:i') }}</td>
                     <td>{{ contract.lunchBreakDuration|date('H:i') }}</td>
                     <td>{{ (contract.lunchBreakExcluded)? 'Yes'|trans:'No'|trans }}</td>

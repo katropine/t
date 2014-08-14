@@ -79,6 +79,7 @@
                     <th>{{'Duration'|trans}}</th>
                     <th>{{'Timezone'|trans}}</th>
                     <th>{{'Modified'|trans}}</th>
+                    <th>{{'Contract'|trans}}</th>
                     <th></th>
                 </tr>
                 {% for worktime in worktimes %}
@@ -89,6 +90,7 @@
                     <td>{{ worktime.durationToHoursMinutes }}</td>
                     <td>{{ worktime.timezone }}</td>
                     <td>{{ (worktime.modified)? 'Yes'|trans:'No'|trans }}</td>
+                    <td>{{ worktime.employmentContract.name }}</td>
                     <td align="right">
                         <a href="{{path('work_time_edit', {'id': worktime.id })}}" class="btn btn-success btn-xs">{{'edit'|trans}}</a> 
                         

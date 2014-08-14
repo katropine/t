@@ -122,6 +122,7 @@ class EmploymentContractTemplate extends EntityCore{
      * @ORM\Column(type="time", name="late_shift_end", options={"default":"00:00:00"})
      */
     protected $lateShiftEnd;
+
     
     public function getId() {
         return $this->id;
@@ -266,7 +267,6 @@ class EmploymentContractTemplate extends EntityCore{
     public function setLateShiftEnd($lateShiftEnd) {
         $this->lateShiftEnd = $lateShiftEnd;
     }
-
 
 
 }
