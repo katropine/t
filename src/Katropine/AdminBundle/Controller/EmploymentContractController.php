@@ -72,7 +72,7 @@ class EmploymentContractController extends Controller{
         }
         $user = $this->getDoctrine()->getEntityManager()->find("KatropineAdminBundle:User", $uid);
         $total = $this->getDoctrine()->getRepository('KatropineAdminBundle:EmploymentContract')->countAllByUserId($uid);
-        $route_name = 'user_contracts';
+        $route_name = 'contracts_user_list';
         // pagination init
         $maxRows = $myVariable = $this->container->getParameter('max_rows');
         $maxPaginationLinks = $this->container->getParameter('max_pagination_links');

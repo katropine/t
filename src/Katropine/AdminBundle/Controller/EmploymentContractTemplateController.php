@@ -15,9 +15,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Katropine\AdminBundle\Classes\Pagination;
 use Symfony\Component\HttpFoundation\Request;
 use Katropine\AdminBundle\Entity\Company;
+use Katropine\AdminBundle\Entity\EmploymentContract;
 use Katropine\AdminBundle\Entity\EmploymentContractTemplate;
 use Katropine\AdminBundle\Form\Type\TimeInterval;
-
+use Katropine\AdminBundle\Classes\PhpObject;
 /**
 * @Route("/contract-template")
 * http://localhost/timelly/web/app_dev.php/admin/contract-template/
@@ -203,6 +204,6 @@ class EmploymentContractTemplateController extends Controller{
         }else{
             $this->get('session')->getFlashBag()->set('success', 'message.New_record_added_successfully');
         }
-        return $this->redirect($returnUrl);
+        return $this->redirect($this->generateUrl("contracts_user_list", ['uid' => $uid, 'page' => 1]));
     }
 }

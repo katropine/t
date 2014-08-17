@@ -82,6 +82,7 @@
                 <tr>
                     <th>{{'Id'|trans}}</th>
                     <th>{{'Name'|trans}}</th>
+                    <th>{{'Default'|trans}}</th>
                     <th>{{'Vacation_days_per_year'|trans}}</th>
                     <th>{{'Min_hours_per_week'|trans}}</th>
                     <th>{{'Working_day_duration'|trans}}</th>
@@ -94,13 +95,14 @@
                 <tr>
                     <td>{{ contract.id }}</td>
                     <td><a href="{{ path('employment_contract_edit', {'id' : contract.id}) }}">{{ contract.name }}</a></td>
+                    <td>{{ (contract.default)? 'Yes'|trans|label('success')|raw:'No'|trans|label('default')|raw  }}</td>
                     <td>{{ contract.vacationDaysPerYear }}</td>
                     <td>{{ contract.minHoursPerWeek }}</td>
                     <td>{{ contract.workingDayDuration|date('H:i') }}</td>
                     <td>{{ contract.lunchBreakDuration|date('H:i') }}</td>
                     <td>{{ (contract.lunchBreakExcluded)? 'Yes'|trans:'No'|trans }}</td>
                   
-                    <td align="right"><a href="{{path('employment_contract_edit', {'id': contract.id })}}" class="btn btn-success btn-xs">{{'edit'|trans}}</a> <a href="{{path('employment_contract_delete', {'id': contract.id })}}" class="btn btn-danger btn-xs">{{'delete'|trans}}</a></td>
+                    <td align="right"><a href="{{path('contract_edit', {'id': contract.id })}}" class="btn btn-success btn-xs">{{'edit'|trans}}</a> <a href="{{path('employment_contract_delete', {'id': contract.id })}}" class="btn btn-danger btn-xs">{{'delete'|trans}}</a></td>
                 </tr>
                 {% endfor %}
             </table>
