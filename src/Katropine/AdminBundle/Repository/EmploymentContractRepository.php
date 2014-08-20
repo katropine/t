@@ -7,6 +7,7 @@ namespace Katropine\AdminBundle\Repository;
  * @since Aug 4, 2014
  */
 use Doctrine\ORM\EntityRepository;
+use Katropine\AdminBundle\Entity\User;
 
 class EmploymentContractRepository extends EntityRepository{
 
@@ -69,4 +70,12 @@ class EmploymentContractRepository extends EntityRepository{
                 ->getSingleScalarResult();
     }
     
+    public function resetDefault(User $user){
+        $dql = "UPDATE KatropineAdminBundle:EmploymentContract s SET s.default = 0 WHERE s.company = :cid AND s.user = :uid";
+        
+        return $this->getEntityManager()->createQuery($dql)
+                ->setParameter('cid', $user->getCompany()->getId())
+                ->setParameter('uid', $user->getId())
+                ->execute();
+    }
 }

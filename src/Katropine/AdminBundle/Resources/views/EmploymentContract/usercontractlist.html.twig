@@ -56,11 +56,9 @@
                     {% if user is defined and user is not null %}
                     <a href="{{path('company_user_employment_contracts', {'id' : user.company.id,'uid': user.id})}}" class="btn btn-primary">{{'Assign_from_template'|trans}}</a>
                     {% endif %} 
-                    {% if company is defined and company is not null %}
-                    <a href="{{path('company_employment_contract_addnew', {'cid': company.id})}}" class="btn btn-primary">{{'Add_new'|trans}}</a>
-                    {% else %}
-                    <a href="{{path('employment_contract_addnew')}}" class="btn btn-primary">{{'Add_new'|trans}}</a>    
-                    {% endif %}    
+                    
+                    <a href="{{path('contract_user_addnew', {'uid' : user.id})}}" class="btn btn-primary">{{'Add_new'|trans}}</a>    
+                        
                 </div>
             </div>
         </nav>

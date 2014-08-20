@@ -65,8 +65,8 @@
                 <tr>
                     <td>{{ contract.id }}</td>
                     <td><a href="{{ path('employment_contract_edit', {'id' : contract.id}) }}">{{ contract.name }}</a></td>
-                    <td>{{ contract.user.firstname }} {{ contract.user.firstname }}</td>
                     <td>{{ contract.company.name }}</td>
+                    <td>{{ contract.user.firstname }} {{ contract.user.lastname }}</td>
                     <td>{{ (contract.default)? 'Yes'|trans|label('success')|raw:'No'|trans|label('default')|raw  }}</td>
                     <td>{{ contract.vacationDaysPerYear }}</td>
                     <td>{{ contract.minHoursPerWeek|timeinterval }}</td>

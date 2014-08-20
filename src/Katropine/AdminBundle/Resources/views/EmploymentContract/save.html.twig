@@ -3,20 +3,40 @@
 {% block title %}{{'Add_new'|trans}} {{'company'|trans}}{% endblock %}
 
 {% block bodyheading %}
-    {% include 'KatropineAdminBundle:partials:bodyheading.html.twig' with {'title' : 'Add_new'|trans } %}
+    {% include 'KatropineAdminBundle:partials:bodyheading.html.twig' with {'title' : 'Add_new_contract'|trans } %}
 {% endblock %}
 
 {% block body %}
-    {% if company is defined and company is not null %}
-    <div>
-        <table class="table">
-            <tr>
-                <td>{{'Id'|trans}}: {{company.id}}</td>
-                <td>{{'Created'|trans}}: {{company.created|date('Y-m-d H:i:s')}}</td>
-                <td>{{'Updated'|trans}}: {{company.modified|date('Y-m-d H:i:s')}}</td>
-            </tr>
-        </table>
-    </div>
+    {% if user is defined and user is not null %}
+     <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <i class="fa fa-check fa-5x"></i>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <p class="announcement-heading">{{user.firstname}} {{user.lastname}}</p>
+                            <p class="announcement-text">{{user.company.name}} </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="panel-footer announcement-bottom">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <i class="fa fa-arrow-circle-right"></i>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>    
     {% endif %}        
     <div>      
         {{ form(form) }}

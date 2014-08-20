@@ -105,24 +105,25 @@ class EmploymentContractController extends Controller{
      * @Route("/{id}/edit/", name="contract_edit")
      * @Template()
      */
-    public function saveAction(Request $request, $id = 0, $cid = 0){
+    public function saveAction(Request $request, $id = 0, $uid = 0){
         
         $company = null;
+        $user = null;
         $returnUrl = $this->generateUrl('contracts_list');
         if($id > 0){
             $contract = $this->getDoctrine()->getEntityManager()->find("KatropineAdminBundle:EmploymentContract", $id);
         }else{
             $contract = new EmploymentContract();
         }
-        if($cid > 0){ // not done
-            $user = $this->getDoctrine()->getRepository('KatropineAdminBundle:User')->fetchById($uid);
-            $returnUrl = $this->generateUrl('contract_user_addnew', array('cid' => $company->getId()));
-           
-            $contract->setCompany($company);
+        if($uid > 0){ // not done
+            $user = $this->getDoctrine()->getEntityManager()->find('KatropineAdminBundle:User', $uid);
+            $returnUrl = $this->generateUrl('contracts_user_list', array('uid' => $user->getId()));
+            $contract->setUser($user);
+            $contract->setCompany($user->getCompany());
         }
                 
         $formBuilder = $this->createFormBuilder($contract);
-        if($id == 0){ // nop
+        if($id == 0 && $uid == 0){ // nop
             $formBuilder->add('company', 'entity', array( 'class' => 'KatropineAdminBundle:Company', 'property' => 'name'));
         }
         
@@ -161,11 +162,16 @@ class EmploymentContractController extends Controller{
         
         if ($request->isMethod('POST')) {
             if($form->isValid()){
+                
+                if($contract->getDefault()){
+                    $this->getDoctrine()->getRepository('KatropineAdminBundle:EmploymentContract')->resetDefault($contract->getUser());
+                }
+                
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($contract);
                 $em->flush();
                 
-                if($id > 0){
+                if($contract->getId() > 0){
                     $this->get('session')->getFlashBag()->set('success', 'message.Record_updated_successfully');
                 }else{
                     $this->get('session')->getFlashBag()->set('success', 'message.New_record_added_successfully');
@@ -179,7 +185,7 @@ class EmploymentContractController extends Controller{
         
         
         return [
-            'company' => $company,
+            'user' => $user,
             'form' => $form->createView()    
         ];
     }
